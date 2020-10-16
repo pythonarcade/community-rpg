@@ -15,8 +15,8 @@ class MyGame(arcade.Window):
     Main application class.
     """
 
-    def __init__(self, width, height, title):
-        super().__init__(width, height, title)
+    def __init__(self):
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
 
         arcade.set_background_color(arcade.color.AMAZON)
 
@@ -78,7 +78,7 @@ class MyGame(arcade.Window):
 
 def main():
     """ Main method """
-    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game = MyGame()
     game.setup()
     arcade.run()
 
