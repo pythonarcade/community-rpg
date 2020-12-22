@@ -96,7 +96,7 @@ class MyGame(arcade.Window):
 
         # Sprite Lists
         # Name of map file to load
-        map_name = "sample_map/samplemap.tmx"
+        map_name = "maps/main_map.tmx"
 
         # Read in the tiled map
         my_map = arcade.tilemap.read_tmx(map_name)
@@ -121,8 +121,10 @@ class MyGame(arcade.Window):
                 print(f"Can't load {layer.name} - {e}")
 
         self.player_sprite = Character("characters/Female/Female 18-4.png")
-        self.player_sprite.center_x = 500
-        self.player_sprite.center_y = 1000
+        start_x = 33
+        start_y = 16
+        self.player_sprite.center_x = start_x * 32
+        self.player_sprite.center_y = (64 - start_y) * 32
         self.player_sprite_list = arcade.SpriteList()
         self.player_sprite_list.append(self.player_sprite)
 
