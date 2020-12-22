@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="3">
+ <tileset firstgid="1" source="../tilesets/[Base]BaseChip_pipo.tsx"/>
+ <layer id="1" name="ground" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzTZGRg0BzFo3gUD0lMKQAAArwnYQ==
+  </data>
+ </layer>
+ <layer id="2" name="walls_blocking" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJwrZGRgKALiYiiNzsYnB2JXAnEVEFdDaXQ2PjkQm4WJASvAJY6uZrjqJwbQUv9A+59e+nlwqMMljq6mEC1fgAAl+QcESMk/lAIAmQwdtQ==
+  </data>
+ </layer>
+ <layer id="3" name="windows" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANgpggmFwQxQTBo2AUjILBCQAtAwFh
+  </data>
+ </layer>
+ <layer id="4" name="furniture_blocking" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh48JKJgeEVE275fGYGhjwg/gNU4wiknYDYmRkh/xEo/gmPfmTgCdTnBcTezITVwsBrIs0eBeSBCSTEBTYwg0L9IxkAAH3WCXE=
+  </data>
+ </layer>
+ <layer id="5" name="funiture_nonblocking" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF+MBnJlSaXuAHI4UG0Nm9owACOiiNNzoDADcwA28=
+  </data>
+ </layer>
+ <objectgroup id="7" name="doors">
+  <object id="1" gid="400" x="128.75" y="481.167" width="32" height="32">
+   <properties>
+    <property name="map_name" value="main_map"/>
+    <property name="start_x" type="int" value="33"/>
+    <property name="start_y" type="int" value="16"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -10,6 +10,7 @@ SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 768
 SCREEN_TITLE = "Python Community RPG"
 TILE_SCALING = 1.0
+SPRITE_SIZE = 32
 
 MOVEMENT_SPEED = 3
 
@@ -20,13 +21,54 @@ RIGHT_VIEWPORT_MARGIN = 300
 BOTTOM_VIEWPORT_MARGIN = 300
 TOP_VIEWPORT_MARGIN = 300
 
+STARTING_MAP = "main_map"
+
+
+class GameMap:
+    name = None
+    map_layers = None
+    wall_list = None
+    map_size = None
+
+
+def load_map(map_name):
+    # List of blocking sprites
+    map = GameMap()
+    map.map_layers = OrderedDict()
+    map.wall_list = arcade.SpriteList()
+
+    map.wall_list = arcade.SpriteList()
+
+    # Sprite Lists
+
+    # Read in the tiled map
+    my_map = arcade.tilemap.read_tmx(map_name)
+
+    print(f"Loading map: {map_name}")
+
+    for layer in my_map.layers:
+
+        print(f"  Loading layer: {layer.name}")
+        map.map_layers[layer.name] = arcade.tilemap.process_layer(map_object=my_map,
+                                                                  layer_name=layer.name,
+                                                                  scaling=TILE_SCALING,
+                                                                  use_spatial_hash=True)
+
+        map.map_size = my_map.map_size
+
+        # Any layer with '_blocking' in it, will be a wall
+        if '_blocking' in layer.name:
+            map.wall_list.extend(map.map_layers[layer.name])
+
+    return map
+
 
 class Character(arcade.Sprite):
     def __init__(self, sheet_name):
         super().__init__()
         self.textures = arcade.load_spritesheet(sheet_name,
-                                                sprite_width=32,
-                                                sprite_height=32,
+                                                sprite_width=SPRITE_SIZE,
+                                                sprite_height=SPRITE_SIZE,
                                                 columns=3,
                                                 count=12)
         self.cur_texture_index = 0
@@ -77,9 +119,6 @@ class MyGame(arcade.Window):
         self.player_sprite = None
         self.player_sprite_list = None
 
-        # Sprite Lists
-        self.map_layers = OrderedDict()
-
         # Track the current state of what key is pressed
         self.left_pressed = False
         self.right_pressed = False
@@ -91,44 +130,42 @@ class MyGame(arcade.Window):
 
         self.physics_engine = None
 
+        self.cur_map_name = None
+
+    def switch_map(self, map_name, start_x, start_y):
+
+        self.cur_map_name = map_name
+
+        try:
+            my_map = self.map_list[self.cur_map_name]
+        except KeyError:
+            raise KeyError(f"Unable to find map named '{map_name}'.")
+
+        map_height = my_map.map_size.height
+        self.player_sprite.center_x = start_x * SPRITE_SIZE + SPRITE_SIZE / 2
+        self.player_sprite.center_y = (map_height - start_y) * SPRITE_SIZE - SPRITE_SIZE / 2
+        self.player_sprite_list = arcade.SpriteList()
+        self.player_sprite_list.append(self.player_sprite)
+
+
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                         my_map.wall_list)
+
     def setup(self):
         """ Set up the game variables. Call to re-start the game. """
 
-        # Sprite Lists
-        # Name of map file to load
-        map_name = "maps/main_map.tmx"
+        self.map_list = {}
+        map_name = "main_map"
+        self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
 
-        # Read in the tiled map
-        my_map = arcade.tilemap.read_tmx(map_name)
-
-        # List of blocking sprites
-        self.wall_list = arcade.SpriteList()
-
-        for layer in my_map.layers:
-
-            try:
-                print(f"Loading layer: {layer.name}")
-                self.map_layers[layer.name] = arcade.tilemap.process_layer(map_object=my_map,
-                                                                           layer_name=layer.name,
-                                                                           scaling=TILE_SCALING,
-                                                                           use_spatial_hash=True)
-
-                # Any layer with '_blocking' in it, will be a wall
-                if '_blocking' in layer.name:
-                    self.wall_list.extend(self.map_layers[layer.name])
-
-            except Exception as e:
-                print(f"Can't load {layer.name} - {e}")
+        map_name = "farmhouse"
+        self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
 
         self.player_sprite = Character("characters/Female/Female 18-4.png")
         start_x = 33
         start_y = 16
-        self.player_sprite.center_x = start_x * 32
-        self.player_sprite.center_y = (64 - start_y) * 32
-        self.player_sprite_list = arcade.SpriteList()
-        self.player_sprite_list.append(self.player_sprite)
-
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
+        self.switch_map(STARTING_MAP, start_x, start_y)
+        self.cur_map_name = STARTING_MAP
 
     def on_draw(self):
         """
@@ -140,8 +177,11 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Call draw() on all your sprite lists below
-        for map_layer_name in self.map_layers:
-            self.map_layers[map_layer_name].draw()
+        map_layers = self.map_list[self.cur_map_name].map_layers
+
+        for map_layer_name in map_layers:
+            map_layers[map_layer_name].draw()
+            # print(f"draw {map_layer_name}")
 
         self.player_sprite_list.draw()
 
@@ -167,6 +207,17 @@ class MyGame(arcade.Window):
         # for movement, and call physics engine here.
         self.physics_engine.update()
         self.player_sprite_list.update()
+
+        # --- Manage doors ---
+        map_layers = self.map_list[self.cur_map_name].map_layers
+        doors_hit = arcade.check_for_collision_with_list(self.player_sprite,
+                                                         map_layers['doors'])
+        if len(doors_hit) > 0:
+            map_name = doors_hit[0].properties['map_name']
+            start_x = doors_hit[0].properties['start_x']
+            start_y = doors_hit[0].properties['start_y']
+            print(f"Hit {map_name}")
+            self.switch_map(map_name, start_x, start_y)
 
         # --- Manage Scrolling ---
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="3">
  <tileset firstgid="1" source="../tilesets/[Base]BaseChip_pipo.tsx"/>
  <tileset firstgid="1065" source="../tilesets/[A]Water_pipo.tsx"/>
  <tileset firstgid="4137" source="../tilesets/[A]Grass_pipo.tsx"/>
@@ -8,6 +8,15 @@
    eJzt2sGKwjAQBuAoLF77JHoTT7rv4dmD+DD7DMue9CltYcUwJLaZTpqZ5D/8oDZ28qWNwtC1c24dybZz7sul59B/b+VsJGYfsvf8p2481v3D9d558T10bULneq2XVf8+cr/DH94f8NflP0Z+174b8acG/nb9oXOV9s+5ljX7730eff7+3/+S9/DDX4v/ZZ3rg9+mf6lI+i8j48eOT0lsblJ2+OGHP7+f9qimJtabs+aP9Si4vVkN/ms//vwhN+91ak821MvQ5pfYx9xY80sHfvgt+Vvf/6X9S84Nfvg1+ZeeG/zwa/GXmFuOGpz/e6t+rpVj1+KXMlvz53Cn2Ev6NdhL+bXYS/hz2ef6h/i9VzqO07+d8kxiSTv1+6Hj5vRvc/ql7k3am6XjOH3b0DO2GszW979lPz3Wup+zDjX6U9ahZv+UddE2Nw01NM8Nfvjhh1+qxk8nl417x/9csqZfg9aROF+OUP8SNblzQxAEQdrIE4pjnJ0=
   </data>
  </layer>
+ <objectgroup id="11" name="doors">
+  <object id="2" gid="392" x="1056" y="480" width="32" height="32">
+   <properties>
+    <property name="map_name" value="farmhouse"/>
+    <property name="start_x" type="int" value="4"/>
+    <property name="start_y" type="int" value="12"/>
+   </properties>
+  </object>
+ </objectgroup>
  <layer id="4" name="water_blocking" width="64" height="64">
   <data encoding="base64" compression="zlib">
    eJzt2jEKAjEQBdBpstfxdB5LrPRY6hG0EEyxsGDiZDHvw29n57Gkm4jf51Yi7u8+SsIHdxZ+fn5+fn7+0dvkh5+fn5+fn3/0Nvnh5+fn5+ef3X9ZIs7l+9ZpmbM2L8Pf2jq952X4j6//f2honZY5a/My/LO/f/7R2+SHn5+fn5+ff/Q2+eHn55/XLzJzZn///Pz8/Pz8/KO3yQ8/P/8+/T1uKLZ6XT7+U+P9R+9u3Ueoqv5rn49ka0E=
@@ -20,7 +29,7 @@
  </layer>
  <layer id="9" name="decorations_nonblocking" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt2UsKwjAQgOHgjSwIKm49i55Kd7pSPKJkUUiHaIK1kyHzfzCUQEsyaR6kDQHA6LyaXr05ifxb98Naub4x36MoL2m/fBXo2K51A4AfzF3bc89fRETXJKJ7EqlhZnssuImIavPvwVNE5Cn/lwhpq9scdaX84c+jUP7G0p6gfRYC4IeltQ7ozaF1AwAl7CV16CfbLL8fb+fBXL6t/51ZHh8A6jGXoWlTed8Q+h6bn3LrOWcA/1W7ngI5jJ8y9mRIzJsp5ogN3r6Pooy1CgAAePcGdqUjgA==
+   eJzt2UsKwjAQgOHqjSwIKm49ix7HE+hOV4pHlCwK6RBNsHYyZP4PhlJoyUyaB227DsDgtBwfvTmK+mv3w0q5vaHegzif027+JtCwbe0EgB9MXdtT919EBNcognsUsX5iPhbcRASl9bfgKSLwVP9LhLTRTUddrn6LzovaGbTtkTn/xtKeoP0uBMAPS2sd0Jp97QQAJewlZegn2yw/H2/vg6l6a/87szw+AJRjLkPTuvC6vmt7bH6qreWaAfxX6XoKpDB+8tiTITFvxpgjNnj7Poo81ioAAODdG+51JBE=
   </data>
  </layer>
  <layer id="5" name="bridges" width="64" height="64">
@@ -30,7 +39,7 @@
  </layer>
  <layer id="8" name="misc_blocking" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt1D8KwjAchuHUIzk6FidvpS5VFw/g6AVEHEQc/LOIHsqAKaT218ZCk2p8H/gIpKHNR9oqBbxcdG5Wrmb+3NmOwjo1nI8N/cuGFfMh9Hvl+HRXxe8/z8PvYyuF7h+a1M/OQEhMXP1TITGRztdO0/5bnX3DdEnq50qdTZhtt8bVdSSkTmz9J0kx06T+flL/lZedt0M6Xzuf9k/NKPVf+9p8C8amV5aUu9rJhP6pldyvvf8z3WeuszRjVfLrC8f7f1DyP373tu6ovuP/DwAAAACQpe4lAAAAAAAAAAAAAAAA+DNP1QlPBw==
+   eJzt1D8OgjAchuHikRwdiZO3UifxCo5ewBgHYxz8sxg9lBjbpMAPKgktWt8n+ULSEuiXFpQC3i55blauevzc24rCOrUcjw39q8Y14yEMB9X4dFfF79/k4fe1tUL3D03qZ2ckJCau/qmQmEj7a6dt/22efcv0SernSpNNmGV3xtV1IqRJbP1nSTHzpPl5Uv+Vl5V3Q9pfO5/2T/VV6r/2tfgOTHWvl3JXO2be7p9aMX7t/C/yPpnulCX1MfNLx/k/KPkfvyvdd1Tf8f8HAAAAAMhS9y0AAAAAAAAAAAAAAAD4M08O2EzT
   </data>
  </layer>
  <layer id="7" name="trees_blocking" width="64" height="64">
