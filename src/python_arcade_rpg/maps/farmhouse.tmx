@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#aaaa7f" nextlayerid="8" nextobjectid="4">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#aaaa7f" nextlayerid="9" nextobjectid="5">
  <tileset firstgid="1" source="../tilesets/[Base]BaseChip_pipo.tsx"/>
  <layer id="1" name="ground" width="16" height="16">
   <data encoding="base64" compression="zlib">
@@ -18,7 +18,7 @@
  </layer>
  <layer id="4" name="furniture_blocking" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh48JKJgeEVE275fGYGhjwg/gNU4wiknYDYmRkh/xEo/gmPfmTgCdTnBcTezITVwsBrIs0eBeSBCSTEBTYwg0L9IxkAAH3WCXE=
+   eJxjYBh48JKJgeEVE2F1f4BqHJkZGJyA2JkZIf4RKP6JCP0g4AnU5wXE3syE1cLAayLNHgXkgQkkxAU2MINC/SMZAACE3wiO
   </data>
  </layer>
  <layer id="5" name="funiture_nonblocking" width="16" height="16">
@@ -39,6 +39,13 @@
     <property name="map_name" value="main_map"/>
     <property name="start_x" type="int" value="41"/>
     <property name="start_y" type="int" value="16"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="searchable">
+  <object id="4" gid="878" x="314" y="97.3333" width="32" height="32">
+   <properties>
+    <property name="item" value="Apple"/>
    </properties>
   </object>
  </objectgroup>

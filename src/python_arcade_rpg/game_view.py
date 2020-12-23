@@ -203,10 +203,26 @@ class GameView(arcade.View):
             self.left_pressed = True
         elif key in KEY_RIGHT:
             self.right_pressed = True
-        elif key == arcade.key.I:
+        elif key in INVENTORY:
             self.window.show_view(self.window.views['inventory'])
         elif key == arcade.key.ESCAPE:
             self.window.show_view(self.window.views['main_menu'])
+        elif key in SEARCH:
+            self.search()
+
+    def search(self):
+        """ Search for things """
+        map_layers = self.map_list[self.cur_map_name].map_layers
+        if 'searchable' not in map_layers:
+            print(f"No searchable sprites on {self.cur_map_name} map layer.")
+            return
+
+        searchable_sprites = map_layers['searchable']
+        sprites_in_range = arcade.check_for_collision_with_list(self.player_sprite, searchable_sprites)
+        print(f"Found {len(sprites_in_range)}")
+        for sprite in sprites_in_range:
+            if 'item' in sprite.properties:
+                print(f"Has item property: {sprite.properties['item']}")
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
