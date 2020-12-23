@@ -1,4 +1,6 @@
 from collections import OrderedDict
+import os
+from os.path import isfile, join
 
 import arcade
 from constants import TILE_SCALING
@@ -39,3 +41,19 @@ def load_map(map_name):
             game_map.wall_list.extend(game_map.map_layers[layer.name])
 
     return game_map
+
+def load_maps():
+    # Dictionary to hold all our maps
+    map_list = {}
+
+    # Directory to pull maps from
+    mypath = "maps"
+
+    # Pull names of all tmx files in that path
+    map_file_names = [f[:-4] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".tmx")]
+
+    # Loop and load each file
+    for map_name in map_file_names:
+        map_list[map_name] = load_map(f"maps/{map_name}.tmx")
+
+    return map_list

@@ -1,10 +1,8 @@
-import os
-from os.path import isfile, join
 import arcade
 
 from constants import *
 
-from game_map import load_map
+from game_map import load_maps
 from character import Character
 
 class GameView(arcade.View):
@@ -12,7 +10,7 @@ class GameView(arcade.View):
     Main application class.
     """
 
-    def __init__(self):
+    def __init__(self, map_list):
         super().__init__()
 
         arcade.set_background_color(arcade.color.AMAZON)
@@ -35,7 +33,7 @@ class GameView(arcade.View):
         self.physics_engine = None
 
         # Maps
-        self.map_list = None
+        self.map_list = map_list
 
         # Name of map we are on
         self.cur_map_name = None
@@ -72,19 +70,6 @@ class GameView(arcade.View):
         # Create the player character
         self.player_sprite = Character("characters/Female/Female 18-4.png")
 
-        # Dictionary to hold all our maps
-        self.map_list = {}
-
-        # Directory to pull maps from
-        mypath = "maps"
-
-        # Pull names of all tmx files in that path
-        map_file_names = [f[:-4] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".tmx")]
-
-        # Loop and load each file
-        for map_name in map_file_names:
-            self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
-
         # Spawn the player
         start_x = STARTING_X
         start_y = STARTING_Y
@@ -105,7 +90,6 @@ class GameView(arcade.View):
 
         for map_layer_name in map_layers:
             map_layers[map_layer_name].draw()
-            # print(f"draw {map_layer_name}")
 
         self.player_sprite_list.draw()
 
