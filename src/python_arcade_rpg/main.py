@@ -12,9 +12,14 @@ from constants import SCREEN_HEIGHT
 from constants import SCREEN_TITLE
 
 
+class MyWindow(arcade.Window):
+    def __init__(self):
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
+        self.views = {}
+
 def main():
     """ Main method """
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
+    window = MyWindow()
     window.center_window()
     start_view = LoadingView()
     start_view.setup()

@@ -1,3 +1,8 @@
+"""
+Animated sprite for characters that walk around.
+"""
+
+
 import arcade
 from constants import SPRITE_SIZE
 

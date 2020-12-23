@@ -1,3 +1,6 @@
+"""
+Constant values for the game
+"""
 import arcade
 
 SCREEN_WIDTH = 1024

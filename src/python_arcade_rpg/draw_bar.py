@@ -1,3 +1,6 @@
+"""
+Draw a percentage bar
+"""
 import arcade
 
 def draw_bar(current_amount,

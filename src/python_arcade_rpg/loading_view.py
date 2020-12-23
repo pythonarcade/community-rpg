@@ -1,6 +1,10 @@
+"""
+Loading screen
+"""
 import arcade
 from load_game_map import load_maps
 from game_view import GameView
+from inventory_view import InventoryView
 from draw_bar import draw_bar
 
 class LoadingView(arcade.View):
@@ -36,6 +40,9 @@ class LoadingView(arcade.View):
         if self.started:
             done, self.progress, self.map_list = load_maps()
             if done:
-                start_view = GameView(self.map_list)
-                start_view.setup()
-                self.window.show_view(start_view)
+                self.window.views['game'] = GameView(self.map_list)
+                self.window.views['game'].setup()
+                self.window.views['inventory'] = InventoryView()
+                self.window.views['inventory'].setup()
+
+                self.window.show_view(self.window.views['game'])

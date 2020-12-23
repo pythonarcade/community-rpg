@@ -1,9 +1,12 @@
+"""
+Main game view
+"""
+
 import arcade
 
 from constants import *
-
-from load_game_map import load_maps
 from character_sprite import CharacterSprite
+
 
 class GameView(arcade.View):
     """
@@ -105,13 +108,13 @@ class GameView(arcade.View):
             changed_viewport = True
 
         # Scroll right
-        right_boundary = self.view_left + SCREEN_WIDTH - RIGHT_VIEWPORT_MARGIN
+        right_boundary = self.view_left + self.window.width - RIGHT_VIEWPORT_MARGIN
         if self.player_sprite.right > right_boundary:
             self.view_left += self.player_sprite.right - right_boundary
             changed_viewport = True
 
         # Scroll up
-        top_boundary = self.view_bottom + SCREEN_HEIGHT - TOP_VIEWPORT_MARGIN
+        top_boundary = self.view_bottom + self.window.height - TOP_VIEWPORT_MARGIN
         if self.player_sprite.top > top_boundary:
             self.view_bottom += self.player_sprite.top - top_boundary
             changed_viewport = True
@@ -130,9 +133,16 @@ class GameView(arcade.View):
 
             # Do the scrolling
             arcade.set_viewport(self.view_left,
-                                SCREEN_WIDTH + self.view_left,
+                                self.window.width + self.view_left,
                                 self.view_bottom,
-                                SCREEN_HEIGHT + self.view_bottom)
+                                self.window.height + self.view_bottom)
+
+    def on_show_view(self):
+        # Do the scrolling
+        arcade.set_viewport(self.view_left,
+                            self.window.width + self.view_left,
+                            self.view_bottom,
+                            self.window.height + self.view_bottom)
 
     def on_update(self, delta_time):
         """
@@ -193,6 +203,8 @@ class GameView(arcade.View):
             self.left_pressed = True
         elif key in KEY_RIGHT:
             self.right_pressed = True
+        elif key == arcade.key.I:
+            self.window.show_view(self.window.views['inventory'])
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """

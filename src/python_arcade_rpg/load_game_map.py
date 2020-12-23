@@ -1,3 +1,6 @@
+"""
+Load maps
+"""
 from collections import OrderedDict
 import os
 from os.path import isfile, join
