@@ -5,6 +5,7 @@ import arcade
 from load_game_map import load_maps
 from game_view import GameView
 from inventory_view import InventoryView
+from main_menu_view import MainMenuView
 from draw_bar import draw_bar
 
 class LoadingView(arcade.View):
@@ -44,5 +45,7 @@ class LoadingView(arcade.View):
                 self.window.views['game'].setup()
                 self.window.views['inventory'] = InventoryView()
                 self.window.views['inventory'].setup()
+                self.window.views['main_menu'] = MainMenuView()
+                self.window.views['main_menu'].setup()
 
                 self.window.show_view(self.window.views['game'])

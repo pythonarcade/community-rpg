@@ -205,6 +205,8 @@ class GameView(arcade.View):
             self.right_pressed = True
         elif key == arcade.key.I:
             self.window.show_view(self.window.views['inventory'])
+        elif key == arcade.key.ESCAPE:
+            self.window.show_view(self.window.views['main_menu'])
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
