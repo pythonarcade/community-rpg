@@ -1,5 +1,5 @@
 import arcade
-from game_map import load_maps
+from load_game_map import load_maps
 from game_view import GameView
 from draw_bar import draw_bar
 

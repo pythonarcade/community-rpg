@@ -2,7 +2,7 @@ import arcade
 from constants import SPRITE_SIZE
 
 
-class Character(arcade.Sprite):
+class CharacterSprite(arcade.Sprite):
     def __init__(self, sheet_name):
         super().__init__()
         self.textures = arcade.load_spritesheet(sheet_name,

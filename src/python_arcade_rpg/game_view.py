@@ -2,8 +2,8 @@ import arcade
 
 from constants import *
 
-from game_map import load_maps
-from character import Character
+from load_game_map import load_maps
+from character_sprite import CharacterSprite
 
 class GameView(arcade.View):
     """
@@ -68,7 +68,7 @@ class GameView(arcade.View):
         """ Set up the game variables. Call to re-start the game. """
 
         # Create the player character
-        self.player_sprite = Character("characters/Female/Female 18-4.png")
+        self.player_sprite = CharacterSprite("characters/Female/Female 18-4.png")
 
         # Spawn the player
         start_x = STARTING_X
