@@ -1,13 +1,19 @@
 Welcome to The Python Arcade Community RPG!
 ===========================================
 
-This is a PyPi package which was made to document how to create
-a PyPi package.
+This is an open-source RPG game.
 
-Documentation
--------------
+* Everything is open-source, MIT license.
+* Maps are made in `Tiled Map Editor <https://www.mapeditor.org/>`_
+* Code is written in Python
+* Libraries used: `Arcade <https://arcade.academy>`_,
+  `Pyglet <http://pyglet.org/>`_,
+  `PyTiled Parser <https://pypi.org/project/pytiled-parser/>`_
 
-For full documentation see: https://pypi-package-example.readthedocs.io/
+Graphic assets are from:
+
+* `Pipoya Free RPG Tileset 32x32 <https://pipoya.itch.io/pipoya-rpg-tileset-32x32>`_
+* `Pipoya Free RPG Character Sprites 32x32 <https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32>`_
 
 Badges
 ------
@@ -19,15 +25,6 @@ Badges
 .. image:: https://img.shields.io/badge/first--timers--only-friendly-blue.svg
     :alt: first-timers-only Friendly
     :target: http://www.firsttimersonly.com/
-
-.. image:: https://travis-ci.org/pvcraven/pypi_package_example.svg?branch=master
-    :target: https://travis-ci.org/pythonarcade/community-rpg
-
-.. image:: https://coveralls.io/repos/github/pvcraven/pypi_package_example/badge.svg?branch=master
-    :target: https://coveralls.io/github/pythonarcade/community-rpg?branch=main
-
-.. image:: https://img.shields.io/github/commit-activity/w/pythonarcade/community-rpg
-    :alt: GitHub commit activity
 
 Latest Release
 --------------
