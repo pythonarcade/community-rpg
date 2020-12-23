@@ -11,7 +11,7 @@
    <properties>
     <property name="map_name" value="main_map"/>
     <property name="start_x" type="int" value="7"/>
-    <property name="start_y" type="int" value="4"/>
+    <property name="start_y" type="int" value="22"/>
    </properties>
   </object>
  </objectgroup>
