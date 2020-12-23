@@ -13,6 +13,7 @@ class GameMap:
     map_size = None
     background_color = arcade.color.AMAZON
 
+
 def load_map(map_name):
 
     game_map = GameMap()
@@ -42,18 +43,33 @@ def load_map(map_name):
 
     return game_map
 
+
 def load_maps():
-    # Dictionary to hold all our maps
-    map_list = {}
 
     # Directory to pull maps from
     mypath = "maps"
 
-    # Pull names of all tmx files in that path
-    map_file_names = [f[:-4] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".tmx")]
+    if load_maps.map_file_names is None:
+
+        # Dictionary to hold all our maps
+        load_maps.map_list = {}
+
+        # Pull names of all tmx files in that path
+        load_maps.map_file_names = [f[:-4] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".tmx")]
+        load_maps.map_file_names.sort()
+        load_maps.file_count = len(load_maps.map_file_names)
 
     # Loop and load each file
-    for map_name in map_file_names:
-        map_list[map_name] = load_map(f"maps/{map_name}.tmx")
+    map_name = load_maps.map_file_names.pop(0)
+    load_maps.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
 
-    return map_list
+    files_left = load_maps.file_count - len(load_maps.map_file_names)
+    progress = 100 * files_left / load_maps.file_count
+
+    done = len(load_maps.map_file_names) == 0
+    return done, progress, load_maps.map_list
+
+
+load_maps.map_file_names = None
+load_maps.map_list = None
+load_maps.file_count = None
