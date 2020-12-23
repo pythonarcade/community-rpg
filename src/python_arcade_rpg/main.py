@@ -85,7 +85,7 @@ class Character(arcade.Sprite):
         self.cur_texture_index = 0
         self.texture = self.textures[self.cur_texture_index]
 
-    def update(self):
+    def on_update(self, delta_time):
         if not self.change_x and not self.change_y:
             return
 
@@ -282,7 +282,7 @@ class MyGame(arcade.Window):
         self.physics_engine.update()
 
         # Update player animation
-        self.player_sprite_list.update()
+        self.player_sprite_list.on_update(delta_time)
 
         # --- Manage doors ---
         map_layers = self.map_list[self.cur_map_name].map_layers
