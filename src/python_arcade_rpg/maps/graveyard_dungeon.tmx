@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="16" height="32" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#525252" nextlayerid="6" nextobjectid="2">
+ <tileset firstgid="1" source="../tilesets/[Base]BaseChip_pipo.tsx"/>
+ <layer id="2" name="walls_blocking" width="16" height="32">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAMLkLpy0B8EwlfIUIvsv6LOMQHu/7bDBD/XoPSDFD6PpH6CbmL1vrR4w2G71Bo/ygYBaNgFIyCoQsAF+4ZBg==
+  </data>
+ </layer>
+ <objectgroup id="4" name="doors">
+  <object id="1" gid="295" x="448" y="32" width="32" height="32">
+   <properties>
+    <property name="map_name" value="main_map"/>
+    <property name="start_x" type="int" value="7"/>
+    <property name="start_y" type="int" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="5" name="decorative_nonblocking" width="16" height="32">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgYoM84QBaPglEwCkbBKBgFo4ABAHGOADE=
+  </data>
+ </layer>
+</map>

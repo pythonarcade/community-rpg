@@ -4,6 +4,8 @@ Python Arcade Community RPG
 An open-source RPG
 """
 from collections import OrderedDict
+import os
+from os.path import isfile, join
 import arcade
 
 SCREEN_WIDTH = 1024
@@ -12,6 +14,7 @@ SCREEN_TITLE = "Python Community RPG"
 TILE_SCALING = 1.0
 SPRITE_SIZE = 32
 
+# How fast does the player move
 MOVEMENT_SPEED = 3
 
 # How many pixels to keep as a minimum margin between the character
@@ -21,7 +24,16 @@ RIGHT_VIEWPORT_MARGIN = 300
 BOTTOM_VIEWPORT_MARGIN = 300
 TOP_VIEWPORT_MARGIN = 300
 
+# What map, and what position we start at
 STARTING_MAP = "main_map"
+STARTING_X = 33
+STARTING_Y = 16
+
+# Key mappings
+KEY_UP = [arcade.key.UP, arcade.key.W]
+KEY_DOWN = [arcade.key.DOWN, arcade.key.S]
+KEY_LEFT = [arcade.key.LEFT, arcade.key.A]
+KEY_RIGHT = [arcade.key.RIGHT, arcade.key.D]
 
 
 class GameMap:
@@ -29,38 +41,37 @@ class GameMap:
     map_layers = None
     wall_list = None
     map_size = None
+    background_color = arcade.color.AMAZON
 
 
 def load_map(map_name):
+
+    game_map = GameMap()
+    game_map.map_layers = OrderedDict()
+
     # List of blocking sprites
-    map = GameMap()
-    map.map_layers = OrderedDict()
-    map.wall_list = arcade.SpriteList()
-
-    map.wall_list = arcade.SpriteList()
-
-    # Sprite Lists
+    game_map.wall_list = arcade.SpriteList()
 
     # Read in the tiled map
-    my_map = arcade.tilemap.read_tmx(map_name)
-
     print(f"Loading map: {map_name}")
+    my_map = arcade.tilemap.read_tmx(map_name)
 
     for layer in my_map.layers:
 
         print(f"  Loading layer: {layer.name}")
-        map.map_layers[layer.name] = arcade.tilemap.process_layer(map_object=my_map,
-                                                                  layer_name=layer.name,
-                                                                  scaling=TILE_SCALING,
-                                                                  use_spatial_hash=True)
+        game_map.map_layers[layer.name] = arcade.tilemap.process_layer(map_object=my_map,
+                                                                       layer_name=layer.name,
+                                                                       scaling=TILE_SCALING,
+                                                                       use_spatial_hash=True)
 
-        map.map_size = my_map.map_size
+        game_map.map_size = my_map.map_size
+        game_map.background_color = my_map.background_color
 
         # Any layer with '_blocking' in it, will be a wall
         if '_blocking' in layer.name:
-            map.wall_list.extend(map.map_layers[layer.name])
+            game_map.wall_list.extend(game_map.map_layers[layer.name])
 
-    return map
+    return game_map
 
 
 class Character(arcade.Sprite):
@@ -116,6 +127,7 @@ class MyGame(arcade.Window):
 
         arcade.set_background_color(arcade.color.AMAZON)
 
+        # Player sprite
         self.player_sprite = None
         self.player_sprite_list = None
 
@@ -125,15 +137,26 @@ class MyGame(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
 
+        # Used in scrolling
         self.view_left = 0
         self.view_bottom = 0
 
+        # Physics engine
         self.physics_engine = None
 
+        # Maps
+        self.map_list = None
+
+        # Name of map we are on
         self.cur_map_name = None
 
     def switch_map(self, map_name, start_x, start_y):
-
+        """
+        Switch the current map
+        :param map_name: Name of map to switch to
+        :param start_x: Grid x location to spawn at
+        :param start_y: Grid y location to spawn at
+        """
         self.cur_map_name = map_name
 
         try:
@@ -141,12 +164,14 @@ class MyGame(arcade.Window):
         except KeyError:
             raise KeyError(f"Unable to find map named '{map_name}'.")
 
+        if my_map.background_color:
+            arcade.set_background_color(my_map.background_color)
+
         map_height = my_map.map_size.height
         self.player_sprite.center_x = start_x * SPRITE_SIZE + SPRITE_SIZE / 2
         self.player_sprite.center_y = (map_height - start_y) * SPRITE_SIZE - SPRITE_SIZE / 2
         self.player_sprite_list = arcade.SpriteList()
         self.player_sprite_list.append(self.player_sprite)
-
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                          my_map.wall_list)
@@ -154,16 +179,25 @@ class MyGame(arcade.Window):
     def setup(self):
         """ Set up the game variables. Call to re-start the game. """
 
-        self.map_list = {}
-        map_name = "main_map"
-        self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
-
-        map_name = "farmhouse"
-        self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
-
+        # Create the player character
         self.player_sprite = Character("characters/Female/Female 18-4.png")
-        start_x = 33
-        start_y = 16
+
+        # Dictionary to hold all our maps
+        self.map_list = {}
+
+        # Directory to pull maps from
+        mypath = "maps"
+
+        # Pull names of all tmx files in that path
+        map_file_names = [f[:-4] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".tmx")]
+
+        # Loop and load each file
+        for map_name in map_file_names:
+            self.map_list[map_name] = load_map(f"maps/{map_name}.tmx")
+
+        # Spawn the player
+        start_x = STARTING_X
+        start_y = STARTING_Y
         self.switch_map(STARTING_MAP, start_x, start_y)
         self.cur_map_name = STARTING_MAP
 
@@ -185,41 +219,8 @@ class MyGame(arcade.Window):
 
         self.player_sprite_list.draw()
 
-    def on_update(self, delta_time):
-        """
-        All the logic to move, and the game logic goes here.
-        """
-        # Calculate speed based on the keys pressed
-        self.player_sprite.change_x = 0
-        self.player_sprite.change_y = 0
-
-        if self.up_pressed and not self.down_pressed:
-            self.player_sprite.change_y = MOVEMENT_SPEED
-        elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -MOVEMENT_SPEED
-        if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -MOVEMENT_SPEED
-        elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = MOVEMENT_SPEED
-
-        # Call update to move the sprite
-        # If using a physics engine, call update player to rely on physics engine
-        # for movement, and call physics engine here.
-        self.physics_engine.update()
-        self.player_sprite_list.update()
-
-        # --- Manage doors ---
-        map_layers = self.map_list[self.cur_map_name].map_layers
-        doors_hit = arcade.check_for_collision_with_list(self.player_sprite,
-                                                         map_layers['doors'])
-        if len(doors_hit) > 0:
-            map_name = doors_hit[0].properties['map_name']
-            start_x = doors_hit[0].properties['start_x']
-            start_y = doors_hit[0].properties['start_y']
-            print(f"Hit {map_name}")
-            self.switch_map(map_name, start_x, start_y)
-
-        # --- Manage Scrolling ---
+    def scroll_to_player(self):
+        """ Manage Scrolling """
 
         changed_viewport = False
 
@@ -259,47 +260,89 @@ class MyGame(arcade.Window):
                                 self.view_bottom,
                                 SCREEN_HEIGHT + self.view_bottom)
 
+    def on_update(self, delta_time):
+        """
+        All the logic to move, and the game logic goes here.
+        """
+
+        # Calculate speed based on the keys pressed
+        self.player_sprite.change_x = 0
+        self.player_sprite.change_y = 0
+
+        if self.up_pressed and not self.down_pressed:
+            self.player_sprite.change_y = MOVEMENT_SPEED
+        elif self.down_pressed and not self.up_pressed:
+            self.player_sprite.change_y = -MOVEMENT_SPEED
+        if self.left_pressed and not self.right_pressed:
+            self.player_sprite.change_x = -MOVEMENT_SPEED
+        elif self.right_pressed and not self.left_pressed:
+            self.player_sprite.change_x = MOVEMENT_SPEED
+
+        # Call update to move the sprite
+        self.physics_engine.update()
+
+        # Update player animation
+        self.player_sprite_list.update()
+
+        # --- Manage doors ---
+        map_layers = self.map_list[self.cur_map_name].map_layers
+
+        # Is there as layer named 'doors'?
+        if 'doors' in map_layers:
+            # Did we hit a door?
+            doors_hit = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             map_layers['doors'])
+            # We did!
+            if len(doors_hit) > 0:
+                try:
+                    # Grab the info we need
+                    map_name = doors_hit[0].properties['map_name']
+                    start_x = doors_hit[0].properties['start_x']
+                    start_y = doors_hit[0].properties['start_y']
+                except KeyError:
+                    raise KeyError("Door objects must have 'map_name', 'start_x', and 'start_y' properties defined.")
+
+                # Swap to the new map
+                self.switch_map(map_name, start_x, start_y)
+
+        # Scroll the window to the player
+        self.scroll_to_player()
+
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
-        if key == arcade.key.UP:
+        if key in KEY_UP:
             self.up_pressed = True
-        elif key == arcade.key.DOWN:
+        elif key in KEY_DOWN:
             self.down_pressed = True
-        elif key == arcade.key.LEFT:
+        elif key in KEY_LEFT:
             self.left_pressed = True
-        elif key == arcade.key.RIGHT:
+        elif key in KEY_RIGHT:
             self.right_pressed = True
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
 
-        if key == arcade.key.UP:
+        if key in KEY_UP:
             self.up_pressed = False
-        elif key == arcade.key.DOWN:
+        elif key in KEY_DOWN:
             self.down_pressed = False
-        elif key == arcade.key.LEFT:
+        elif key in KEY_LEFT:
             self.left_pressed = False
-        elif key == arcade.key.RIGHT:
+        elif key in KEY_RIGHT:
             self.right_pressed = False
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
-        """
-        Called whenever the mouse moves.
-        """
+        """ Called whenever the mouse moves. """
         pass
 
     def on_mouse_press(self, x, y, button, key_modifiers):
-        """
-        Called when the user presses a mouse button.
-        """
+        """ Called when the user presses a mouse button. """
         if button == arcade.MOUSE_BUTTON_RIGHT:
             self.player_sprite.destination_point = x, y
 
     def on_mouse_release(self, x, y, button, key_modifiers):
-        """
-        Called when a user releases a mouse button.
-        """
+        """ Called when a user releases a mouse button. """
         pass
 
 

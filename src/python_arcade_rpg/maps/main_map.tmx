@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="3">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#5f8702" nextlayerid="12" nextobjectid="6">
  <tileset firstgid="1" source="../tilesets/[Base]BaseChip_pipo.tsx"/>
  <tileset firstgid="1065" source="../tilesets/[A]Water_pipo.tsx"/>
  <tileset firstgid="4137" source="../tilesets/[A]Grass_pipo.tsx"/>
@@ -16,6 +16,20 @@
     <property name="start_y" type="int" value="12"/>
    </properties>
   </object>
+  <object id="3" gid="392" x="1312" y="480" width="32" height="32">
+   <properties>
+    <property name="map_name" value="farmhouse"/>
+    <property name="start_x" type="int" value="11"/>
+    <property name="start_y" type="int" value="12"/>
+   </properties>
+  </object>
+  <object id="5" gid="67" x="224" y="192" width="32" height="32">
+   <properties>
+    <property name="map_name" value="graveyard_dungeon"/>
+    <property name="start_x" type="int" value="14"/>
+    <property name="start_y" type="int" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="4" name="water_blocking" width="64" height="64">
   <data encoding="base64" compression="zlib">
@@ -29,7 +43,7 @@
  </layer>
  <layer id="9" name="decorations_nonblocking" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt2UsKwjAQgOHqjSwIKm49ix7HE+hOV4pHlCwK6RBNsHYyZP4PhlJoyUyaB227DsDgtBwfvTmK+mv3w0q5vaHegzif027+JtCwbe0EgB9MXdtT919EBNcognsUsX5iPhbcRASl9bfgKSLwVP9LhLTRTUddrn6LzovaGbTtkTn/xtKeoP0uBMAPS2sd0Jp97QQAJewlZegn2yw/H2/vg6l6a/87szw+AJRjLkPTuvC6vmt7bH6qreWaAfxX6XoKpDB+8tiTITFvxpgjNnj7Poo81ioAAODdG+51JBE=
+   eJzt2UsKwjAQgOHqjSwIKm49ix7HE+hOV4pHlCwK6RCb0NjJkPwfDKW0JZk0D9J2HYDBZT0+tuYs8i/dDhvl8oZ8T+J8SYfli0DF9qUrAMyQO7eHnr+JcO5eOE8vfH1mfSx4iHBS86/BW4TTUv4fEdJOtzrqYvlbdF3lXce0V+R8iqU1QXsvBKAdluY6oDbH0hUAlLCWpKGdbLP8flrbD4byLf3vzHL/AJCOsQxN28T7+q7uvvkrt5pzBvBfqfMpEEL/iWNNhsS4GWOM2NDa91HEMVcBAIDWfQFUNCSi
   </data>
  </layer>
  <layer id="5" name="bridges" width="64" height="64">
