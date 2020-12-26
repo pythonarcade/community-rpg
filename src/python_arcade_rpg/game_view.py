@@ -6,6 +6,7 @@ import arcade
 
 from constants import *
 from character_sprite import CharacterSprite
+from message_box import MessageBox
 
 
 class GameView(arcade.View):
@@ -40,6 +41,8 @@ class GameView(arcade.View):
 
         # Name of map we are on
         self.cur_map_name = None
+
+        self.message_box = None
 
     def switch_map(self, map_name, start_x, start_y):
         """
@@ -96,6 +99,9 @@ class GameView(arcade.View):
 
         self.player_sprite_list.draw()
 
+        if self.message_box:
+            self.message_box.on_draw()
+
     def scroll_to_player(self):
         """ Manage Scrolling """
 
@@ -138,6 +144,11 @@ class GameView(arcade.View):
                                 self.window.height + self.view_bottom)
 
     def on_show_view(self):
+        # Set background color
+        my_map = self.map_list[self.cur_map_name]
+        if my_map.background_color:
+            arcade.set_background_color(my_map.background_color)
+
         # Do the scrolling
         arcade.set_viewport(self.view_left,
                             self.window.width + self.view_left,
@@ -195,6 +206,10 @@ class GameView(arcade.View):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
+        if self.message_box:
+            self.message_box.on_key_press(key, modifiers)
+            return
+
         if key in KEY_UP:
             self.up_pressed = True
         elif key in KEY_DOWN:
@@ -210,6 +225,10 @@ class GameView(arcade.View):
         elif key in SEARCH:
             self.search()
 
+
+    def close_message_box(self):
+        self.message_box = None
+
     def search(self):
         """ Search for things """
         map_layers = self.map_list[self.cur_map_name].map_layers
@@ -222,7 +241,7 @@ class GameView(arcade.View):
         print(f"Found {len(sprites_in_range)}")
         for sprite in sprites_in_range:
             if 'item' in sprite.properties:
-                print(f"Has item property: {sprite.properties['item']}")
+                self.message_box = MessageBox(self, f"Found: {sprite.properties['item']}")
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """

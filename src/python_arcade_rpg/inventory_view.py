@@ -3,6 +3,7 @@ Inventory
 """
 import arcade
 
+
 class InventoryView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -22,11 +23,11 @@ class InventoryView(arcade.View):
         pass
 
     def on_show_view(self):
+        arcade.set_background_color(arcade.color.ALMOND)
         arcade.set_viewport(0,
                             self.window.width,
                             0,
                             self.window.height)
-
 
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.ESCAPE:

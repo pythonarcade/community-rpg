@@ -31,3 +31,7 @@ KEY_LEFT = [arcade.key.LEFT, arcade.key.A]
 KEY_RIGHT = [arcade.key.RIGHT, arcade.key.D]
 INVENTORY = [arcade.key.I]
 SEARCH = [arcade.key.O]
+
+# Message box
+MESSAGE_BOX_FONT_SIZE = 44
+MESSAGE_BOX_MARGIN = 30
