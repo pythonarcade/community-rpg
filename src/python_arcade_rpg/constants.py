@@ -30,7 +30,7 @@ KEY_DOWN = [arcade.key.DOWN, arcade.key.S]
 KEY_LEFT = [arcade.key.LEFT, arcade.key.A]
 KEY_RIGHT = [arcade.key.RIGHT, arcade.key.D]
 INVENTORY = [arcade.key.I]
-SEARCH = [arcade.key.O]
+SEARCH = [arcade.key.E]
 
 # Message box
 MESSAGE_BOX_FONT_SIZE = 44

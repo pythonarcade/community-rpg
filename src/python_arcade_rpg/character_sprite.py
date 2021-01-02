@@ -17,6 +17,7 @@ class CharacterSprite(arcade.Sprite):
                                                 count=12)
         self.cur_texture_index = 0
         self.texture = self.textures[self.cur_texture_index]
+        self.inventory = []
 
     def on_update(self, delta_time):
         if not self.change_x and not self.change_y:

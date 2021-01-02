@@ -2,8 +2,6 @@
 Main game view
 """
 
-import arcade
-
 from constants import *
 from character_sprite import CharacterSprite
 from message_box import MessageBox
@@ -43,6 +41,7 @@ class GameView(arcade.View):
         self.cur_map_name = None
 
         self.message_box = None
+        self.selected_item = 1
 
     def switch_map(self, map_name, start_x, start_y):
         """
@@ -82,6 +81,34 @@ class GameView(arcade.View):
         self.switch_map(STARTING_MAP, start_x, start_y)
         self.cur_map_name = STARTING_MAP
 
+    def draw_inventory(self):
+        capacity = 10
+
+        field_width = self.window.width / (capacity + 1)
+
+        x = self.view_left + self.window.width / 2
+        y = self.view_bottom + 40
+
+        arcade.draw_rectangle_filled(x, y, self.window.width, 80, arcade.color.ALMOND)
+        for i in range(capacity):
+            y = 40 + self.view_bottom
+            x = i * field_width + self.view_left
+            if i == self.selected_item - 1:
+                arcade.draw_lrtb_rectangle_outline(x - 1,
+                                                   x + field_width - 5,
+                                                   y + 20,
+                                                   y,
+                                                   arcade.color.BLACK,
+                                                   2)
+
+            if len(self.player_sprite.inventory) > i:
+                item_name = self.player_sprite.inventory[i]
+            else:
+                item_name = ""
+
+            text = f"{i + 1}: {item_name}"
+            arcade.draw_text(text, x, y, arcade.color.ALLOY_ORANGE)
+
     def on_draw(self):
         """
         Render the screen.
@@ -99,8 +126,11 @@ class GameView(arcade.View):
 
         self.player_sprite_list.draw()
 
+        self.draw_inventory()
+
         if self.message_box:
             self.message_box.on_draw()
+
 
     def scroll_to_player(self):
         """ Manage Scrolling """
@@ -224,7 +254,26 @@ class GameView(arcade.View):
             self.window.show_view(self.window.views['main_menu'])
         elif key in SEARCH:
             self.search()
-
+        elif key == arcade.key.KEY_1:
+            self.selected_item = 1
+        elif key == arcade.key.KEY_2:
+            self.selected_item = 2
+        elif key == arcade.key.KEY_3:
+            self.selected_item = 3
+        elif key == arcade.key.KEY_4:
+            self.selected_item = 4
+        elif key == arcade.key.KEY_5:
+            self.selected_item = 5
+        elif key == arcade.key.KEY_6:
+            self.selected_item = 6
+        elif key == arcade.key.KEY_7:
+            self.selected_item = 7
+        elif key == arcade.key.KEY_8:
+            self.selected_item = 8
+        elif key == arcade.key.KEY_9:
+            self.selected_item = 9
+        elif key == arcade.key.KEY_0:
+            self.selected_item = 10
 
     def close_message_box(self):
         self.message_box = None
@@ -242,6 +291,8 @@ class GameView(arcade.View):
         for sprite in sprites_in_range:
             if 'item' in sprite.properties:
                 self.message_box = MessageBox(self, f"Found: {sprite.properties['item']}")
+                sprite.remove_from_sprite_lists()
+                self.player_sprite.inventory.append(sprite.properties['item'])
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
