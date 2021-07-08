@@ -17,6 +17,7 @@ class MyWindow(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
         self.views = {}
 
+
 def main():
     """ Main method """
     window = MyWindow()

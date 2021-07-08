@@ -8,6 +8,7 @@ from inventory_view import InventoryView
 from main_menu_view import MainMenuView
 from draw_bar import draw_bar
 
+
 class LoadingView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -22,7 +23,8 @@ class LoadingView(arcade.View):
                          self.window.height / 2,
                          arcade.color.ALLOY_ORANGE,
                          44,
-                         anchor_x="center", anchor_y="center", align="center")
+                         anchor_x="center", anchor_y="center", align="center",
+                         width=self.window.width)
         self.started = True
         draw_bar(current_amount=self.progress,
                  max_amount=100,
