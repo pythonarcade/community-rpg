@@ -17,7 +17,8 @@ class InventoryView(arcade.View):
                          self.window.height - 50,
                          arcade.color.ALLOY_ORANGE,
                          44,
-                         anchor_x="center", anchor_y="center", align="center")
+                         anchor_x="center", anchor_y="center", align="center",
+                         width=self.window.width)
 
     def setup(self):
         pass

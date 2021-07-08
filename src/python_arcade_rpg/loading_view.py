@@ -13,8 +13,9 @@ class LoadingView(arcade.View):
     def __init__(self):
         super().__init__()
         self.started = False
-        arcade.set_background_color(arcade.color.ALMOND)
         self.progress = 0
+        self.map_list = None
+        arcade.set_background_color(arcade.color.ALMOND)
 
     def on_draw(self):
         arcade.start_render()

@@ -42,7 +42,7 @@ def load_map(map_name):
 
     # Read in the tiled map
     print(f"Loading map: {map_name}")
-    my_map = arcade.tilemap.load_tilemap(map_name, scaling=TILE_SCALING)
+    my_map = arcade.tilemap.load_tilemap(map_name, scaling=TILE_SCALING, layer_options=layer_options)
 
     game_map.map_layers = my_map.sprite_lists
 
@@ -67,8 +67,9 @@ def load_maps():
         # Dictionary to hold all our maps
         load_maps.map_list = {}
 
-        # Pull names of all tmx files in that path
-        load_maps.map_file_names = [f[:-5] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".json")]
+        # Pull names of all json files in that path
+        load_maps.map_file_names = \
+            [f[:-5] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".json")]
         load_maps.map_file_names.sort()
         load_maps.file_count = len(load_maps.map_file_names)
 
