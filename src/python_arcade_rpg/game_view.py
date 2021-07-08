@@ -27,10 +27,6 @@ class GameView(arcade.View):
         self.up_pressed = False
         self.down_pressed = False
 
-        # Used in scrolling
-        self.view_left = 0
-        self.view_bottom = 0
-
         # Physics engine
         self.physics_engine = None
 
@@ -42,6 +38,10 @@ class GameView(arcade.View):
 
         self.message_box = None
         self.selected_item = 1
+
+        # Cameras
+        self.camera_sprites = arcade.Camera(self.window, self.window.width, self.window.height)
+        self.camera_gui = arcade.Camera(self.window, self.window.width, self.window.height)
 
     def switch_map(self, map_name, start_x, start_y):
         """
@@ -60,7 +60,7 @@ class GameView(arcade.View):
         if my_map.background_color:
             arcade.set_background_color(my_map.background_color)
 
-        map_height = my_map.map_size.height
+        map_height = my_map.map_size[1]
         self.player_sprite.center_x = start_x * SPRITE_SIZE + SPRITE_SIZE / 2
         self.player_sprite.center_y = (map_height - start_y) * SPRITE_SIZE - SPRITE_SIZE / 2
         self.player_sprite_list = arcade.SpriteList()
@@ -86,13 +86,13 @@ class GameView(arcade.View):
 
         field_width = self.window.width / (capacity + 1)
 
-        x = self.view_left + self.window.width / 2
-        y = self.view_bottom + 40
+        x = self.window.width / 2
+        y = 40
 
         arcade.draw_rectangle_filled(x, y, self.window.width, 80, arcade.color.ALMOND)
         for i in range(capacity):
-            y = 40 + self.view_bottom
-            x = i * field_width + self.view_left
+            y = 40
+            x = i * field_width
             if i == self.selected_item - 1:
                 arcade.draw_lrtb_rectangle_outline(x - 1,
                                                    x + field_width - 5,
@@ -118,6 +118,8 @@ class GameView(arcade.View):
         # the screen to the background color, and erase what we drew last frame.
         arcade.start_render()
 
+        self.camera_sprites.use()
+
         # Call draw() on all your sprite lists below
         map_layers = self.map_list[self.cur_map_name].map_layers
 
@@ -126,64 +128,24 @@ class GameView(arcade.View):
 
         self.player_sprite_list.draw()
 
+        self.camera_gui.use()
         self.draw_inventory()
 
         if self.message_box:
             self.message_box.on_draw()
 
-
     def scroll_to_player(self):
         """ Manage Scrolling """
 
-        changed_viewport = False
-
-        # Scroll left
-        left_boundary = self.view_left + LEFT_VIEWPORT_MARGIN
-        if self.player_sprite.left < left_boundary:
-            self.view_left -= left_boundary - self.player_sprite.left
-            changed_viewport = True
-
-        # Scroll right
-        right_boundary = self.view_left + self.window.width - RIGHT_VIEWPORT_MARGIN
-        if self.player_sprite.right > right_boundary:
-            self.view_left += self.player_sprite.right - right_boundary
-            changed_viewport = True
-
-        # Scroll up
-        top_boundary = self.view_bottom + self.window.height - TOP_VIEWPORT_MARGIN
-        if self.player_sprite.top > top_boundary:
-            self.view_bottom += self.player_sprite.top - top_boundary
-            changed_viewport = True
-
-        # Scroll down
-        bottom_boundary = self.view_bottom + BOTTOM_VIEWPORT_MARGIN
-        if self.player_sprite.bottom < bottom_boundary:
-            self.view_bottom -= bottom_boundary - self.player_sprite.bottom
-            changed_viewport = True
-
-        if changed_viewport:
-            # Only scroll to integers. Otherwise we end up with pixels that
-            # don't line up on the screen
-            self.view_bottom = int(self.view_bottom)
-            self.view_left = int(self.view_left)
-
-            # Do the scrolling
-            arcade.set_viewport(self.view_left,
-                                self.window.width + self.view_left,
-                                self.view_bottom,
-                                self.window.height + self.view_bottom)
+        position = self.player_sprite.center_x - self.window.width / 2, \
+                   self.player_sprite.center_y - self.window.height / 2
+        self.camera_sprites.move_to(position, CAMERA_SPEED)
 
     def on_show_view(self):
         # Set background color
         my_map = self.map_list[self.cur_map_name]
         if my_map.background_color:
             arcade.set_background_color(my_map.background_color)
-
-        # Do the scrolling
-        arcade.set_viewport(self.view_left,
-                            self.window.width + self.view_left,
-                            self.view_bottom,
-                            self.window.height + self.view_bottom)
 
     def on_update(self, delta_time):
         """
