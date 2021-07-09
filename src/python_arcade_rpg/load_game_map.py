@@ -14,6 +14,7 @@ class GameMap:
     map_layers = None
     wall_list = None
     map_size = None
+    enemies = None
     background_color = arcade.color.AMAZON
 
 
@@ -21,6 +22,7 @@ def load_map(map_name):
 
     game_map = GameMap()
     game_map.map_layers = OrderedDict()
+    game_map.enemies = arcade.SpriteList()
 
     # List of blocking sprites
     game_map.wall_list = arcade.SpriteList()
@@ -43,6 +45,14 @@ def load_map(map_name):
     # Read in the tiled map
     print(f"Loading map: {map_name}")
     my_map = arcade.tilemap.load_tilemap(map_name, scaling=TILE_SCALING, layer_options=layer_options)
+
+    if 'enemies' in my_map.object_lists:
+        enemy_points = my_map.object_lists['enemies']
+        for enemy_point in enemy_points:
+            enemy = arcade.SpriteSolidColor(10, 10, arcade.color.RED)
+            enemy.position = enemy_point.shape
+            print("Positioning the enemy at: ", enemy.position, "in map", map_name)
+            game_map.enemies.append(enemy)
 
     game_map.map_layers = my_map.sprite_lists
 

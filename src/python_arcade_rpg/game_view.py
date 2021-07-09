@@ -2,6 +2,7 @@
 Main game view
 """
 
+import json
 from constants import *
 from character_sprite import CharacterSprite
 from message_box import MessageBox
@@ -39,6 +40,12 @@ class GameView(arcade.View):
         self.message_box = None
         self.selected_item = 1
 
+        f = open("item_dictionary.json")
+        self.item_dictionary = json.load(f)
+
+        f = open("enemy_dictionary.json")
+        self.enemy_dictionary = json.load(f)
+
         # Cameras
         self.camera_sprites = arcade.Camera(self.window, self.window.width, self.window.height)
         self.camera_gui = arcade.Camera(self.window, self.window.width, self.window.height)
@@ -63,6 +70,7 @@ class GameView(arcade.View):
         map_height = my_map.map_size[1]
         self.player_sprite.center_x = start_x * SPRITE_SIZE + SPRITE_SIZE / 2
         self.player_sprite.center_y = (map_height - start_y) * SPRITE_SIZE - SPRITE_SIZE / 2
+        self.scroll_to_player(1.0)
         self.player_sprite_list = arcade.SpriteList()
         self.player_sprite_list.append(self.player_sprite)
 
@@ -92,17 +100,17 @@ class GameView(arcade.View):
         arcade.draw_rectangle_filled(x, y, self.window.width, 80, arcade.color.ALMOND)
         for i in range(capacity):
             y = 40
-            x = i * field_width
+            x = i * field_width + 5
             if i == self.selected_item - 1:
-                arcade.draw_lrtb_rectangle_outline(x - 1,
+                arcade.draw_lrtb_rectangle_outline(x - 3,
                                                    x + field_width - 5,
                                                    y + 20,
-                                                   y,
+                                                   y - 5,
                                                    arcade.color.BLACK,
                                                    2)
 
             if len(self.player_sprite.inventory) > i:
-                item_name = self.player_sprite.inventory[i]
+                item_name = self.player_sprite.inventory[i]['short_name']
             else:
                 item_name = ""
 
@@ -126,6 +134,11 @@ class GameView(arcade.View):
         for map_layer_name in map_layers:
             map_layers[map_layer_name].draw()
 
+        self.map_list[self.cur_map_name].enemies.draw()
+        # print(self.cur_map_name, len(self.map_list[self.cur_map_name].enemies))
+        # for enemy in self.map_list[self.cur_map_name].enemies:
+        #     print(enemy.position)
+
         self.player_sprite_list.draw()
 
         self.camera_gui.use()
@@ -134,12 +147,12 @@ class GameView(arcade.View):
         if self.message_box:
             self.message_box.on_draw()
 
-    def scroll_to_player(self):
+    def scroll_to_player(self, speed=CAMERA_SPEED):
         """ Manage Scrolling """
 
         position = self.player_sprite.center_x - self.window.width / 2, \
                    self.player_sprite.center_y - self.window.height / 2
-        self.camera_sprites.move_to(position, CAMERA_SPEED)
+        self.camera_sprites.move_to(position, speed)
 
     def on_show_view(self):
         # Set background color
@@ -191,6 +204,9 @@ class GameView(arcade.View):
 
                 # Swap to the new map
                 self.switch_map(map_name, start_x, start_y)
+
+        if 'enemies' in map_layers:
+            print("Found enemy layer")
 
         # Scroll the window to the player
         self.scroll_to_player()
@@ -249,12 +265,15 @@ class GameView(arcade.View):
 
         searchable_sprites = map_layers['searchable']
         sprites_in_range = arcade.check_for_collision_with_list(self.player_sprite, searchable_sprites)
-        print(f"Found {len(sprites_in_range)}")
+        print(f"Found {len(sprites_in_range)} searchable sprite(s) in range.")
         for sprite in sprites_in_range:
             if 'item' in sprite.properties:
                 self.message_box = MessageBox(self, f"Found: {sprite.properties['item']}")
                 sprite.remove_from_sprite_lists()
-                self.player_sprite.inventory.append(sprite.properties['item'])
+                lookup_item = self.item_dictionary[sprite.properties['item']]
+                self.player_sprite.inventory.append(lookup_item)
+            else:
+                print("The 'item' property was not set for the sprite. Can't get any items from this.")
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -280,3 +299,11 @@ class GameView(arcade.View):
     def on_mouse_release(self, x, y, button, key_modifiers):
         """ Called when a user releases a mouse button. """
         pass
+
+    def on_resize(self, width, height):
+        """
+        Resize window
+        Handle the user grabbing the edge and resizing the window.
+        """
+        self.camera_sprites.resize(width, height)
+        self.camera_gui.resize(width, height)

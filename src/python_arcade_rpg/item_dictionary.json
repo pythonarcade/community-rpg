@@ -1,0 +1,8 @@
+{
+  "Apple": {"short_name": "Apple",
+            "type": "food",
+            "heal_amount": 5},
+  "Dagger": {"short_name": "Dagger",
+             "type": "food",
+             "damage_amount": 5}
+}
