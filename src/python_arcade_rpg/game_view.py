@@ -43,7 +43,7 @@ class GameView(arcade.View):
         f = open("item_dictionary.json")
         self.item_dictionary = json.load(f)
 
-        f = open("enemy_dictionary.json")
+        f = open("characters_dictionary.json")
         self.enemy_dictionary = json.load(f)
 
         # Cameras
@@ -126,24 +126,30 @@ class GameView(arcade.View):
         # the screen to the background color, and erase what we drew last frame.
         arcade.start_render()
 
+        # Use the scrolling camera for sprites
         self.camera_sprites.use()
 
-        # Call draw() on all your sprite lists below
+        # Grab each tile layer from the map
         map_layers = self.map_list[self.cur_map_name].map_layers
 
+        # Draw each tile layer from the map
         for map_layer_name in map_layers:
             map_layers[map_layer_name].draw()
 
-        self.map_list[self.cur_map_name].enemies.draw()
-        # print(self.cur_map_name, len(self.map_list[self.cur_map_name].enemies))
-        # for enemy in self.map_list[self.cur_map_name].enemies:
-        #     print(enemy.position)
+        # Draw all the enemies
+        self.map_list[self.cur_map_name].characters.draw()
 
+        # Draw the player
         self.player_sprite_list.draw()
+        # print(self.player_sprite.position)
 
+        # Use the non-scrolled GUI camera
         self.camera_gui.use()
+
+        # Draw the inventory
         self.draw_inventory()
 
+        # Draw any message boxes
         if self.message_box:
             self.message_box.on_draw()
 
@@ -151,7 +157,7 @@ class GameView(arcade.View):
         """ Manage Scrolling """
 
         position = self.player_sprite.center_x - self.window.width / 2, \
-                   self.player_sprite.center_y - self.window.height / 2
+            self.player_sprite.center_y - self.window.height / 2
         self.camera_sprites.move_to(position, speed)
 
     def on_show_view(self):
@@ -184,6 +190,9 @@ class GameView(arcade.View):
         # Update player animation
         self.player_sprite_list.on_update(delta_time)
 
+        # Update the characters
+        self.map_list[self.cur_map_name].characters.on_update(delta_time)
+
         # --- Manage doors ---
         map_layers = self.map_list[self.cur_map_name].map_layers
 
@@ -204,9 +213,6 @@ class GameView(arcade.View):
 
                 # Swap to the new map
                 self.switch_map(map_name, start_x, start_y)
-
-        if 'enemies' in map_layers:
-            print("Found enemy layer")
 
         # Scroll the window to the player
         self.scroll_to_player()

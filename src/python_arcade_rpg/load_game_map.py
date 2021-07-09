@@ -1,12 +1,15 @@
 """
 Load maps
 """
+import json
 from collections import OrderedDict
 import os
 from os.path import isfile, join
 
 import arcade
 from constants import TILE_SCALING
+from character_sprite import CharacterSprite
+from path_following_sprite import PathFollowingSprite
 
 
 class GameMap:
@@ -14,15 +17,18 @@ class GameMap:
     map_layers = None
     wall_list = None
     map_size = None
-    enemies = None
+    characters = None
     background_color = arcade.color.AMAZON
 
 
 def load_map(map_name):
+    """
+    Load a map
+    """
 
     game_map = GameMap()
     game_map.map_layers = OrderedDict()
-    game_map.enemies = arcade.SpriteList()
+    game_map.characters = arcade.SpriteList()
 
     # List of blocking sprites
     game_map.wall_list = arcade.SpriteList()
@@ -46,17 +52,53 @@ def load_map(map_name):
     print(f"Loading map: {map_name}")
     my_map = arcade.tilemap.load_tilemap(map_name, scaling=TILE_SCALING, layer_options=layer_options)
 
-    if 'enemies' in my_map.object_lists:
-        enemy_points = my_map.object_lists['enemies']
-        for enemy_point in enemy_points:
-            enemy = arcade.SpriteSolidColor(10, 10, arcade.color.RED)
-            enemy.position = enemy_point.shape
-            print("Positioning the enemy at: ", enemy.position, "in map", map_name)
-            game_map.enemies.append(enemy)
+    if 'characters' in my_map.object_lists:
+        f = open("characters_dictionary.json")
+        character_dictionary = json.load(f)
+        character_object_list = my_map.object_lists['characters']
 
+        for character_object in character_object_list:
+
+            if 'type' not in character_object.properties:
+                print(f"No character type for character in map {map_name}.")
+                continue
+
+            character_type = character_object.properties['type']
+            if character_type not in character_dictionary:
+                print(f"Unable to find '{character_type}' in characters_dictionary.json.")
+                continue
+
+            character_data = character_dictionary[character_type]
+            shape = character_object.shape
+
+            if isinstance(shape, list) and len(shape) == 2:
+                # Point
+                character_sprite = CharacterSprite(f"characters/{character_data['images']}")
+                character_sprite.position = shape
+            elif isinstance(shape, list) and len(shape[0]) == 2:
+                # Rect or polygon.
+                location = [shape[0][0], shape[0][1]]
+                character_sprite = PathFollowingSprite(f"characters/{character_data['images']}")
+                character_sprite.position = location
+                path = []
+                for point in shape:
+                    location = [point[0], point[1]]
+                    path.append(location)
+                character_sprite.path = path
+            else:
+                print(f"Unknown shape type for character with shape '{shape}' in map {map_name}.")
+                continue
+
+            print(f"Adding character {character_type} at {character_sprite.position}")
+            game_map.characters.append(character_sprite)
+
+    # Get all the tiled sprite lists
     game_map.map_layers = my_map.sprite_lists
 
+    # Define the size of the map, in tiles
     game_map.map_size = my_map.width, my_map.height
+
+    # Set the background color
     game_map.background_color = my_map.background_color
 
     # Any layer with '_blocking' in it, will be a wall
@@ -68,6 +110,10 @@ def load_map(map_name):
 
 
 def load_maps():
+    """
+    Load all the Tiled maps from a directory.
+    (Must use the .json extension.)
+    """
 
     # Directory to pull maps from
     mypath = "maps"

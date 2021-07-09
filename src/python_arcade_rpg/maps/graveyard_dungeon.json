@@ -73,7 +73,7 @@
         {
          "draworder":"topdown",
          "id":8,
-         "name":"enemies",
+         "name":"characters",
          "objects":[
                 {
                  "height":0,
