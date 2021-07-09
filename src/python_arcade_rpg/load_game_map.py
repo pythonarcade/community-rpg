@@ -10,14 +10,17 @@ import arcade
 from constants import TILE_SCALING
 from character_sprite import CharacterSprite
 from path_following_sprite import PathFollowingSprite
+from arcade.experimental.lights import Light, LightLayer
 
 
 class GameMap:
     name = None
     map_layers = None
     wall_list = None
+    light_layer = None
     map_size = None
     characters = None
+    properties = None
     background_color = arcade.color.AMAZON
 
 
@@ -29,6 +32,7 @@ def load_map(map_name):
     game_map = GameMap()
     game_map.map_layers = OrderedDict()
     game_map.characters = arcade.SpriteList()
+    game_map.light_layer = LightLayer(100, 100)
 
     # List of blocking sprites
     game_map.wall_list = arcade.SpriteList()
@@ -60,7 +64,7 @@ def load_map(map_name):
         for character_object in character_object_list:
 
             if 'type' not in character_object.properties:
-                print(f"No character type for character in map {map_name}.")
+                print(f"No 'type' field for character in map {map_name}. {character_object.properties}")
                 continue
 
             character_type = character_object.properties['type']
@@ -92,6 +96,42 @@ def load_map(map_name):
             print(f"Adding character {character_type} at {character_sprite.position}")
             game_map.characters.append(character_sprite)
 
+    if 'lights' in my_map.object_lists:
+        lights_object_list = my_map.object_lists['lights']
+
+        for light_object in lights_object_list:
+            if 'color' not in light_object.properties:
+                print(f"No color for light in map {map_name}.")
+                continue
+
+            shape = light_object.shape
+
+            if isinstance(shape, list) and len(shape) == 2:
+                # Point
+                if 'radius' in light_object.properties:
+                    radius = light_object.properties['radius']
+                else:
+                    radius = 150
+                mode = 'soft'
+                color = light_object.properties['color']
+                color = (color.green, color.blue, color.alpha)
+                light = Light(shape[0], shape[1], radius, color, mode)
+                game_map.light_layer.add(light)
+                print("Added light", color, "radius", radius)
+            else:
+                print("Failed to add light")
+    else:
+        # Hack
+        x = 0
+        y = 0
+        radius = 1
+        mode = 'soft'
+        color = arcade.csscolor.WHITE
+        dummy_light = Light(x, y, radius, color, mode)
+        game_map.light_layer.add(dummy_light)
+        print("Added default light")
+
+    # Get all the tiled sprite lists
     # Get all the tiled sprite lists
     game_map.map_layers = my_map.sprite_lists
 
@@ -100,6 +140,8 @@ def load_map(map_name):
 
     # Set the background color
     game_map.background_color = my_map.background_color
+
+    game_map.properties = my_map.properties
 
     # Any layer with '_blocking' in it, will be a wall
     for layer in game_map.map_layers:

@@ -6,6 +6,7 @@ import json
 from constants import *
 from character_sprite import CharacterSprite
 from message_box import MessageBox
+from arcade.experimental.lights import Light, LightLayer
 
 
 class GameView(arcade.View):
@@ -50,6 +51,14 @@ class GameView(arcade.View):
         self.camera_sprites = arcade.Camera(self.window, self.window.width, self.window.height)
         self.camera_gui = arcade.Camera(self.window, self.window.width, self.window.height)
 
+        # Create a small white light
+        x = 100
+        y = 200
+        radius = 150
+        mode = 'soft'
+        color = arcade.csscolor.WHITE
+        self.player_light = Light(x, y, radius, color, mode)
+
     def switch_map(self, map_name, start_x, start_y):
         """
         Switch the current map
@@ -76,6 +85,9 @@ class GameView(arcade.View):
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                          my_map.wall_list)
+
+        if my_map.light_layer:
+            my_map.light_layer.resize(self.window.width, self.window.height)
 
     def setup(self):
         """ Set up the game variables. Call to re-start the game. """
@@ -125,23 +137,42 @@ class GameView(arcade.View):
         # This command should happen before we start drawing. It will clear
         # the screen to the background color, and erase what we drew last frame.
         arcade.start_render()
+        cur_map = self.map_list[self.cur_map_name]
 
-        # Use the scrolling camera for sprites
-        self.camera_sprites.use()
+        # --- Light related ---
+        # Everything that should be affected by lights gets rendered inside this
+        # 'with' statement. Nothing is rendered to the screen yet, just the light
+        # layer.
+        with cur_map.light_layer:
+            arcade.set_background_color(cur_map.background_color)
 
-        # Grab each tile layer from the map
-        map_layers = self.map_list[self.cur_map_name].map_layers
+            # Use the scrolling camera for sprites
+            self.camera_sprites.use()
 
-        # Draw each tile layer from the map
-        for map_layer_name in map_layers:
-            map_layers[map_layer_name].draw()
+            # Grab each tile layer from the map
+            map_layers = cur_map.map_layers
 
-        # Draw all the enemies
-        self.map_list[self.cur_map_name].characters.draw()
+            # Draw each tile layer from the map
+            for map_layer_name in map_layers:
+                map_layers[map_layer_name].draw()
 
-        # Draw the player
-        self.player_sprite_list.draw()
-        # print(self.player_sprite.position)
+            # Draw all the enemies
+            cur_map.characters.draw()
+
+            # Draw the player
+            self.player_sprite_list.draw()
+            # print(self.player_sprite.position)
+
+        if cur_map.light_layer:
+            # Draw the light layer to the screen.
+            # This fills the entire screen with the lit version
+            # of what we drew into the light layer above.
+            if cur_map.properties and 'ambient_color' in cur_map.properties:
+                ambient_color = cur_map.properties['ambient_color']
+                ambient_color = (ambient_color.green, ambient_color.blue, ambient_color.alpha, ambient_color.red)
+            else:
+                ambient_color = arcade.color.WHITE
+            cur_map.light_layer.draw(ambient_color=ambient_color)
 
         # Use the non-scrolled GUI camera
         self.camera_gui.use()
@@ -189,6 +220,8 @@ class GameView(arcade.View):
 
         # Update player animation
         self.player_sprite_list.on_update(delta_time)
+
+        self.player_light.position = self.player_sprite.position
 
         # Update the characters
         self.map_list[self.cur_map_name].characters.on_update(delta_time)
@@ -258,6 +291,12 @@ class GameView(arcade.View):
             self.selected_item = 9
         elif key == arcade.key.KEY_0:
             self.selected_item = 10
+        elif key == arcade.key.L:
+            cur_map = self.map_list[self.cur_map_name]
+            if self.player_light in cur_map.light_layer:
+                cur_map.light_layer.remove(self.player_light)
+            else:
+                cur_map.light_layer.add(self.player_light)
 
     def close_message_box(self):
         self.message_box = None
@@ -313,3 +352,6 @@ class GameView(arcade.View):
         """
         self.camera_sprites.resize(width, height)
         self.camera_gui.resize(width, height)
+        cur_map = self.map_list[self.cur_map_name]
+        if cur_map.light_layer:
+            cur_map.light_layer.resize(width, height)

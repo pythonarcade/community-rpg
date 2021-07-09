@@ -5,6 +5,20 @@
  "layers":[
         {
          "compression":"zlib",
+         "data":"eJxjYEAAZUbSMcMI1e88RN3vjEc\/OiBW3WDVPwpGwSgYBaMANwAA7QEQJQ==",
+         "encoding":"base64",
+         "height":32,
+         "id":9,
+         "name":"floor",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":16,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "compression":"zlib",
          "data":"eJxjYECAy0B8Ewu+gkP+CgMquMiAHVzEIU+IT2\/99xhQ\/XcVKn4byr8GpRmg9H0i7ccFiHU\/sfph7iQUbzB8h0jzSXXXYNE\/CkbBKBgFowA3AABI8i+M",
          "encoding":"base64",
          "height":32,
@@ -151,9 +165,15 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
+ "nextlayerid":10,
  "nextobjectid":8,
  "orientation":"orthogonal",
+ "properties":[
+        {
+         "name":"ambient_color",
+         "type":"color",
+         "value":"#ff000000"
+        }],
  "renderorder":"left-up",
  "tiledversion":"1.7.0",
  "tileheight":32,
