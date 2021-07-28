@@ -48,8 +48,8 @@ class GameView(arcade.View):
         self.enemy_dictionary = json.load(f)
 
         # Cameras
-        self.camera_sprites = arcade.Camera(self.window, self.window.width, self.window.height)
-        self.camera_gui = arcade.Camera(self.window, self.window.width, self.window.height)
+        self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
+        self.camera_gui = arcade.Camera(self.window.width, self.window.height)
 
         # Create a small white light
         x = 100
@@ -169,7 +169,7 @@ class GameView(arcade.View):
             # of what we drew into the light layer above.
             if cur_map.properties and 'ambient_color' in cur_map.properties:
                 ambient_color = cur_map.properties['ambient_color']
-                ambient_color = (ambient_color.green, ambient_color.blue, ambient_color.alpha, ambient_color.red)
+                # ambient_color = (ambient_color.green, ambient_color.blue, ambient_color.alpha, ambient_color.red)
             else:
                 ambient_color = arcade.color.WHITE
             cur_map.light_layer.draw(ambient_color=ambient_color)
