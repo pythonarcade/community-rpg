@@ -1,6 +1,9 @@
 Welcome to The Python Arcade Community RPG!
 ===========================================
 
+.. image:: screenshot.png
+   :width: 50%
+
 This is an open-source RPG game.
 
 * Everything is open-source, MIT license.
