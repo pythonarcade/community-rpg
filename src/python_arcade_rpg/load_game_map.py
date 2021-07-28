@@ -114,7 +114,7 @@ def load_map(map_name):
                     radius = 150
                 mode = 'soft'
                 color = light_object.properties['color']
-                color = (color.green, color.blue, color.alpha)
+                color = (color.red, color.green, color.blue)
                 light = Light(shape[0], shape[1], radius, color, mode)
                 game_map.light_layer.add(light)
                 print("Added light", color, "radius", radius)
