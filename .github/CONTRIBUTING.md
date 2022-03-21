@@ -1,37 +1,26 @@
-Contributing to the Python Arcade Community RPG
-===============================================
+# Contributing to the Python Arcade Community RPG
 
-Suggest Improvements
---------------------
+## Suggesting Improvements or Reporting Bugs
 
 Open up issues:
 
 https://github.com/pythonarcade/community-rpg/issues
 
-Fix Bugs or Implement Features
-------------------------------
+## Fix Bugs or Implement Features
 
-Before you code, please open an issue for what you are coding, and then
-check in code with that issue number (like "issue #146") as part of the
-comments.
+Before contributing code, please open an issue for what you are coding if one does not already exist,
+and then check in code with that issue number (like "issue #146") as part of the commit message.
 
-Improve the Documentation
--------------------------
+All code being contributed should be formatted with the [black](https://github.com/psf/black) and [isort](https://pycqa.github.io/isort/index.html) auto-formatters. As well as linted with [flake8](https://flake8.pycqa.org/en/latest/). These tools will be installed as part of the dev dependencies of the library when installing with:
 
-You can also suggest improvements to the documentation. All the documentation
-is in the codebase.
+```bash
+pip install -e ".[dev]"
+```
 
-Improve Test Cases
-------------------
+## Improve the Documentation
 
-Improving code coverage, and making better test case examples is appreciated.
+At present there is not stand-alone documentation for this project, while this is subject to change, documentation currently exists only in code comments. Any documentation improvements should follow the same guidelines as bug fixes or feature implementations
 
-How to Build
-------------
+## Test and provide Feedback
 
-In the root directory of the project, you should be able to type:
-
-* `make full` (for Windows)
-* `sudo ./make.sh` (for Linux)
-
-This will build the project, install it, and run all of the tests.
+The more people who can test the game, and on different hardware, the better! If you've played the game and had problems with it, please raise an issue as outlined above including your operating system and hardware details.
