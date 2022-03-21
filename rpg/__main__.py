@@ -6,10 +6,8 @@ An open-source RPG
 
 import arcade
 
-from loading_view import LoadingView
-from constants import SCREEN_WIDTH
-from constants import SCREEN_HEIGHT
-from constants import SCREEN_TITLE
+from rpg.constants import SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_WIDTH
+from rpg.loading_view import LoadingView
 
 
 class MyWindow(arcade.Window):
@@ -17,9 +15,13 @@ class MyWindow(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
         self.views = {}
 
+        arcade.resources.add_resource_handle("characters", "resources/characters")
+        arcade.resources.add_resource_handle("maps", "resources/maps")
+        arcade.resources.add_resource_handle("data", "resources/data")
+
 
 def main():
-    """ Main method """
+    """Main method"""
     window = MyWindow()
     window.center_window()
     start_view = LoadingView()

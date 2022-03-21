@@ -4,17 +4,20 @@ Animated sprite for characters that walk around.
 
 
 import arcade
-from constants import SPRITE_SIZE
+
+from rpg.constants import SPRITE_SIZE
 
 
 class CharacterSprite(arcade.Sprite):
     def __init__(self, sheet_name):
         super().__init__()
-        self.textures = arcade.load_spritesheet(sheet_name,
-                                                sprite_width=SPRITE_SIZE,
-                                                sprite_height=SPRITE_SIZE,
-                                                columns=3,
-                                                count=12)
+        self.textures = arcade.load_spritesheet(
+            sheet_name,
+            sprite_width=SPRITE_SIZE,
+            sprite_height=SPRITE_SIZE,
+            columns=3,
+            count=12,
+        )
         self.cur_texture_index = 0
         self.texture = self.textures[self.cur_texture_index]
         self.inventory = []

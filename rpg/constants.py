@@ -3,8 +3,8 @@ Constant values for the game
 """
 import arcade
 
-SCREEN_WIDTH = 1024
-SCREEN_HEIGHT = 768
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 SCREEN_TITLE = "Python Community RPG"
 TILE_SCALING = 1.0
 SPRITE_SIZE = 32

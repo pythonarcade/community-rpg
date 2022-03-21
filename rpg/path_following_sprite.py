@@ -1,12 +1,15 @@
 import math
+
 import arcade
-from character_sprite import CharacterSprite
+
+from rpg.character_sprite import CharacterSprite
 
 
 class PathFollowingSprite(CharacterSprite):
     """
     Simple character that follows a pre-defined path of points
     """
+
     def __init__(self, sheet_name):
         super().__init__(sheet_name)
         self.path = []

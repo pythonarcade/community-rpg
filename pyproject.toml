@@ -14,23 +14,3 @@ exclude = '''
   | dist
 )/'''
 
-[tool.poetry]
-name = "python_arcade_rpg"
-version = "0.1.0"
-description = "Open source RPG using Arcade and Python"
-authors = ["Arcade Academy"]
-license = "MIT"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-arcade = "^2.4.3"
-arcade-imgui = "^0.1.0"
-black = "^20.8b1"
-pre-commit = "^2.7.1"
-
-[tool.poetry.dev-dependencies]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-

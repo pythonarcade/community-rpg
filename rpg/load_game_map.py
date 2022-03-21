@@ -2,15 +2,16 @@
 Load maps
 """
 import json
-from collections import OrderedDict
 import os
+from collections import OrderedDict
 from os.path import isfile, join
 
 import arcade
-from constants import TILE_SCALING
-from character_sprite import CharacterSprite
-from path_following_sprite import PathFollowingSprite
 from arcade.experimental.lights import Light, LightLayer
+
+from rpg.character_sprite import CharacterSprite
+from rpg.constants import TILE_SCALING
+from rpg.path_following_sprite import PathFollowingSprite
 
 
 class GameMap:
@@ -38,38 +39,44 @@ def load_map(map_name):
     game_map.wall_list = arcade.SpriteList()
 
     layer_options = {
-        'trees_blocking': {
+        "trees_blocking": {
             "use_spatial_hash": True,
         },
-        'misc_blocking': {
+        "misc_blocking": {
             "use_spatial_hash": True,
         },
-        'bridges': {
+        "bridges": {
             "use_spatial_hash": True,
         },
-        'water_blocking': {
+        "water_blocking": {
             "use_spatial_hash": True,
         },
     }
 
     # Read in the tiled map
     print(f"Loading map: {map_name}")
-    my_map = arcade.tilemap.load_tilemap(map_name, scaling=TILE_SCALING, layer_options=layer_options)
+    my_map = arcade.tilemap.load_tilemap(
+        map_name, scaling=TILE_SCALING, layer_options=layer_options
+    )
 
-    if 'characters' in my_map.object_lists:
-        f = open("characters_dictionary.json")
+    if "characters" in my_map.object_lists:
+        f = open("resources/data/characters_dictionary.json")
         character_dictionary = json.load(f)
-        character_object_list = my_map.object_lists['characters']
+        character_object_list = my_map.object_lists["characters"]
 
         for character_object in character_object_list:
 
-            if 'type' not in character_object.properties:
-                print(f"No 'type' field for character in map {map_name}. {character_object.properties}")
+            if "type" not in character_object.properties:
+                print(
+                    f"No 'type' field for character in map {map_name}. {character_object.properties}"
+                )
                 continue
 
-            character_type = character_object.properties['type']
+            character_type = character_object.properties["type"]
             if character_type not in character_dictionary:
-                print(f"Unable to find '{character_type}' in characters_dictionary.json.")
+                print(
+                    f"Unable to find '{character_type}' in characters_dictionary.json."
+                )
                 continue
 
             character_data = character_dictionary[character_type]
@@ -77,12 +84,16 @@ def load_map(map_name):
 
             if isinstance(shape, list) and len(shape) == 2:
                 # Point
-                character_sprite = CharacterSprite(f"characters/{character_data['images']}")
+                character_sprite = CharacterSprite(
+                    f":characters:{character_data['images']}"
+                )
                 character_sprite.position = shape
             elif isinstance(shape, list) and len(shape[0]) == 2:
                 # Rect or polygon.
                 location = [shape[0][0], shape[0][1]]
-                character_sprite = PathFollowingSprite(f"characters/{character_data['images']}")
+                character_sprite = PathFollowingSprite(
+                    f":characters:{character_data['images']}"
+                )
                 character_sprite.position = location
                 path = []
                 for point in shape:
@@ -90,17 +101,19 @@ def load_map(map_name):
                     path.append(location)
                 character_sprite.path = path
             else:
-                print(f"Unknown shape type for character with shape '{shape}' in map {map_name}.")
+                print(
+                    f"Unknown shape type for character with shape '{shape}' in map {map_name}."
+                )
                 continue
 
             print(f"Adding character {character_type} at {character_sprite.position}")
             game_map.characters.append(character_sprite)
 
-    if 'lights' in my_map.object_lists:
-        lights_object_list = my_map.object_lists['lights']
+    if "lights" in my_map.object_lists:
+        lights_object_list = my_map.object_lists["lights"]
 
         for light_object in lights_object_list:
-            if 'color' not in light_object.properties:
+            if "color" not in light_object.properties:
                 print(f"No color for light in map {map_name}.")
                 continue
 
@@ -108,12 +121,12 @@ def load_map(map_name):
 
             if isinstance(shape, list) and len(shape) == 2:
                 # Point
-                if 'radius' in light_object.properties:
-                    radius = light_object.properties['radius']
+                if "radius" in light_object.properties:
+                    radius = light_object.properties["radius"]
                 else:
                     radius = 150
-                mode = 'soft'
-                color = light_object.properties['color']
+                mode = "soft"
+                color = light_object.properties["color"]
                 color = (color.red, color.green, color.blue)
                 light = Light(shape[0], shape[1], radius, color, mode)
                 game_map.light_layer.add(light)
@@ -125,7 +138,7 @@ def load_map(map_name):
         x = 0
         y = 0
         radius = 1
-        mode = 'soft'
+        mode = "soft"
         color = arcade.csscolor.WHITE
         dummy_light = Light(x, y, radius, color, mode)
         game_map.light_layer.add(dummy_light)
@@ -145,7 +158,7 @@ def load_map(map_name):
 
     # Any layer with '_blocking' in it, will be a wall
     for layer in game_map.map_layers:
-        if '_blocking' in layer:
+        if "_blocking" in layer:
             game_map.wall_list.extend(game_map.map_layers[layer])
 
     return game_map
@@ -158,7 +171,7 @@ def load_maps():
     """
 
     # Directory to pull maps from
-    mypath = "maps"
+    mypath = "resources/maps"
 
     if load_maps.map_file_names is None:
 
@@ -166,14 +179,17 @@ def load_maps():
         load_maps.map_list = {}
 
         # Pull names of all json files in that path
-        load_maps.map_file_names = \
-            [f[:-5] for f in os.listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".json")]
+        load_maps.map_file_names = [
+            f[:-5]
+            for f in os.listdir(mypath)
+            if isfile(join(mypath, f)) and f.endswith(".json")
+        ]
         load_maps.map_file_names.sort()
         load_maps.file_count = len(load_maps.map_file_names)
 
     # Loop and load each file
     map_name = load_maps.map_file_names.pop(0)
-    load_maps.map_list[map_name] = load_map(f"maps/{map_name}.json")
+    load_maps.map_list[map_name] = load_map(f"resources/maps/{map_name}.json")
 
     files_left = load_maps.file_count - len(load_maps.map_file_names)
     progress = 100 * files_left / load_maps.file_count
