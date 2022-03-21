@@ -2,7 +2,7 @@
 
 ![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-success)
 ![First Timer Friendly](https://img.shields.io/badge/First%20Timer-friendly-informational)
-![License MIT](https://img.shields.io/github/license/pythonarcade/community-rpg)
+![License MIT](https://img.shields.io/badge/license-MIT-success)
 
 ![Screenshot](/screenshot.png)
 
