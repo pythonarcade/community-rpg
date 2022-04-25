@@ -5,9 +5,8 @@ Main game view
 import json
 
 import arcade
-from arcade.experimental.lights import Light
-
 import rpg.constants as constants
+from arcade.experimental.lights import Light
 from rpg.character_sprite import CharacterSprite
 from rpg.message_box import MessageBox
 

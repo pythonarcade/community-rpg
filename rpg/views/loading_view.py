@@ -2,12 +2,11 @@
 Loading screen
 """
 import arcade
-
 from rpg.draw_bar import draw_bar
-from rpg.game_view import GameView
-from rpg.inventory_view import InventoryView
 from rpg.load_game_map import load_maps
-from rpg.main_menu_view import MainMenuView
+from rpg.views.game_view import GameView
+from rpg.views.inventory_view import InventoryView
+from rpg.views.main_menu_view import MainMenuView
 
 
 class LoadingView(arcade.View):

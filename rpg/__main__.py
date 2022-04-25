@@ -7,7 +7,7 @@ An open-source RPG
 import arcade
 
 from rpg.constants import SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_WIDTH
-from rpg.loading_view import LoadingView
+from rpg.views import LoadingView
 
 
 class MyWindow(arcade.Window):
