@@ -3,6 +3,6 @@
             "type": "food",
             "heal_amount": 5},
   "Dagger": {"short_name": "Dagger",
-             "type": "food",
+             "type": "weapon",
              "damage_amount": 5}
 }

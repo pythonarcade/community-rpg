@@ -150,7 +150,7 @@
                         {
                          "name":"item",
                          "type":"string",
-                         "value":"Rusty Dagger"
+                         "value":"Dagger"
                         }],
                  "rotation":0,
                  "type":"",
@@ -172,10 +172,10 @@
         {
          "name":"ambient_color",
          "type":"color",
-         "value":"#ff000000"
+         "value":"#ff0a0a0a"
         }],
  "renderorder":"left-up",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.8.2",
  "tileheight":32,
  "tilesets":[
         {
@@ -184,6 +184,6 @@
         }],
  "tilewidth":32,
  "type":"map",
- "version":"1.6",
+ "version":"1.8",
  "width":16
 }
