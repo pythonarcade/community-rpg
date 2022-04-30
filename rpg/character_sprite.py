@@ -18,6 +18,7 @@ class CharacterSprite(arcade.Sprite):
             columns=3,
             count=12,
         )
+        self.should_update = 0
         self.cur_texture_index = 0
         self.texture = self.textures[self.cur_texture_index]
         self.inventory = []
@@ -29,7 +30,12 @@ class CharacterSprite(arcade.Sprite):
         # self.center_x += self.change_x
         # self.center_y += self.change_y
 
-        self.cur_texture_index += 1
+        if self.should_update <= 3:
+            self.should_update += 1
+        else:
+            self.should_update = 0
+            self.cur_texture_index += 1
+
         if self.change_x > 0:
             if self.cur_texture_index < 6:
                 self.cur_texture_index = 6
