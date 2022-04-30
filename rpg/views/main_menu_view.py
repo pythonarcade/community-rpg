@@ -21,6 +21,7 @@ class MainMenuView(arcade.View):
             anchor_x="center",
             anchor_y="center",
             align="center",
+            width=self.window.width,
         )
 
     def setup(self):
