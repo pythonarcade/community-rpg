@@ -32,5 +32,9 @@ class InventoryView(arcade.View):
         arcade.set_viewport(0, self.window.width, 0, self.window.height)
 
     def on_key_press(self, symbol: int, modifiers: int):
-        if symbol == arcade.key.ESCAPE:
+        close_inputs = [
+            arcade.key.ESCAPE,
+            arcade.key.I
+        ]
+        if symbol in close_inputs:
             self.window.show_view(self.window.views["game"])
