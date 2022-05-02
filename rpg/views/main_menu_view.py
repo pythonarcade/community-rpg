@@ -24,6 +24,54 @@ class MainMenuView(arcade.View):
             width=self.window.width,
         )
 
+        arcade.draw_text(
+            "Settings (Y)",
+            self.window.width / 2,
+            self.window.height - 150,
+            arcade.color.AMAZON,
+            32,
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+            width=self.window.width,
+        )
+
+        arcade.draw_text(
+            "Close Game (Q)",
+            self.window.width / 2,
+            self.window.height - 250,
+            arcade.color.AMAZON,
+            32,
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+            width=self.window.width,
+        )
+
+        arcade.draw_text(
+            "Resume Game (ESC)",
+            self.window.width / 2,
+            self.window.height - 350,
+            arcade.color.AMAZON,
+            32,
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+            width=self.window.width,
+        )
+
+        arcade.draw_text(
+            "New Game (N)",
+            self.window.width / 2,
+            self.window.height - 450,
+            arcade.color.AMAZON,
+            32,
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+            width=self.window.width,
+        )
+
     def setup(self):
         pass
 
@@ -33,4 +81,11 @@ class MainMenuView(arcade.View):
 
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.ESCAPE:
+            self.window.show_view(self.window.views["game"])
+        elif symbol == arcade.key.Y:
+            self.window.show_view(self.window.views["settings"])
+        elif symbol == arcade.key.Q:
+            self.window.close()
+        elif symbol == arcade.key.N:
+            self.window.views["game"].setup()
             self.window.show_view(self.window.views["game"])
