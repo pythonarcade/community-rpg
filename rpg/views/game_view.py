@@ -7,9 +7,9 @@ import json
 import arcade
 import rpg.constants as constants
 from arcade.experimental.lights import Light
-from rpg.character_sprite import CharacterSprite
 from rpg.player_sprite import PlayerSprite
 from rpg.message_box import MessageBox
+from pyglet.math import Vec2
 
 
 class GameView(arcade.View):
@@ -193,11 +193,11 @@ class GameView(arcade.View):
     def scroll_to_player(self, speed=constants.CAMERA_SPEED):
         """Manage Scrolling"""
 
-        position = (
+        vector = Vec2(
             self.player_sprite.center_x - self.window.width / 2,
             self.player_sprite.center_y - self.window.height / 2,
         )
-        self.camera_sprites.move_to(position, speed)
+        self.camera_sprites.move_to(vector, speed)
 
     def on_show_view(self):
         # Set background color
@@ -284,20 +284,19 @@ class GameView(arcade.View):
 
         if MOVING_UP_LEFT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_UP_RIGHT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_LEFT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_RIGHT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
-
 
         # Call update to move the sprite
         self.physics_engine.update()
