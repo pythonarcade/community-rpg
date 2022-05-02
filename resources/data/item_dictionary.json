@@ -7,5 +7,8 @@
              "damage_amount": 5},
   "Sword": {"short_name": "Sword",
              "type": "weapon",
-             "damage_amount": 10}
+             "damage_amount": 10},
+  "Lesser_Healing_Potion": {"short_name": "Lesser Healing Potion",
+              "type": "Potion",
+              "heal_amount": 10}
 }
