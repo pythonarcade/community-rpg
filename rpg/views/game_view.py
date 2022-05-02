@@ -9,6 +9,7 @@ import rpg.constants as constants
 from arcade.experimental.lights import Light
 from rpg.player_sprite import PlayerSprite
 from rpg.message_box import MessageBox
+from pyglet.math import Vec2
 
 
 class GameView(arcade.View):
@@ -192,11 +193,11 @@ class GameView(arcade.View):
     def scroll_to_player(self, speed=constants.CAMERA_SPEED):
         """Manage Scrolling"""
 
-        position = (
+        vector = Vec2(
             self.player_sprite.center_x - self.window.width / 2,
             self.player_sprite.center_y - self.window.height / 2,
         )
-        self.camera_sprites.move_to(position, speed)
+        self.camera_sprites.move_to(vector, speed)
 
     def on_show_view(self):
         # Set background color
