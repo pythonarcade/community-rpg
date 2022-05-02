@@ -258,6 +258,34 @@
                  "width":32,
                  "x":816,
                  "y":48.6666666666667
+                }, 
+                {
+                 "gid":336,
+                 "height":32,
+                 "id":20,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"map_name",
+                         "type":"string",
+                         "value":"dungeon_lvl_three_maze"
+                        }, 
+                        {
+                         "name":"start_x",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"start_y",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":25.6666666666667,
+                 "y":62.3333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -291,7 +319,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":19,
+ "nextobjectid":21,
  "orientation":"orthogonal",
  "properties":[
         {
