@@ -23,6 +23,8 @@ Graphics Assets From:
 
 ## Development
 
+This project targets Python 3.7 or greater.
+
 To install the project and all development dependencies run the following command, this should ideally be done in a [virtual environment](https://docs.python.org/3/tutorial/venv.html):
 
 ```bash
