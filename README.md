@@ -21,6 +21,18 @@ Graphics Assets From:
 * [Pipoya Free RPG Tileset 32x32](https://pipoya.itch.io/pipoya-rpg-tileset-32x32)
 * [Pipoya Free RPG Character Sprites 32x32](https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32)
 
+## Gameplay
+
+The game is in extremely early stages. For discussion on future direction, see: #31
+
+### Controls
+**Arrow Keys / WASD**: Movement
+**L**: Toggle Light/Torch
+**E**: Pick Up Items
+**I**: Open Inventory (non-functional)
+**1-0 (number keys)**: Select Item in Hotbar
+**ESC**: Open Menu
+
 ## Development
 
 This project targets Python 3.7 or greater.
