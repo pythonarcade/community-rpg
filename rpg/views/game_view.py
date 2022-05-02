@@ -190,10 +190,6 @@ class GameView(arcade.View):
 
             # Draw scene
             cur_map.scene.draw()
-            
-            # Draw each tile layer from the map
-            for map_layer_name in map_layers:
-                map_layers[map_layer_name].draw()
 
             for item in map_layers.get("searchable", []):
                 arcade.Sprite(
