@@ -271,22 +271,29 @@ class GameView(arcade.View):
 
         if MOVING_UP:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED
-        elif MOVING_DOWN:
+
+        if MOVING_DOWN:
             self.player_sprite.change_y = -constants.MOVEMENT_SPEED
+
         if MOVING_LEFT:
             self.player_sprite.change_x = -constants.MOVEMENT_SPEED
-        elif MOVING_RIGHT:
+
+        if MOVING_RIGHT:
             self.player_sprite.change_x = constants.MOVEMENT_SPEED
-        elif MOVING_UP_LEFT:
+
+        if MOVING_UP_LEFT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
-        elif MOVING_UP_RIGHT:
+
+        if MOVING_UP_RIGHT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
-        elif MOVING_DOWN_LEFT:
+
+        if MOVING_DOWN_LEFT:
             self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
-        elif MOVING_DOWN_RIGHT:
+
+        if MOVING_DOWN_RIGHT:
             self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
 
