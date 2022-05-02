@@ -151,7 +151,7 @@
                         {
                          "name":"radius",
                          "type":"int",
-                         "value":20
+                         "value":40
                         }],
                  "rotation":0,
                  "type":"",
