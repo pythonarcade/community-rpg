@@ -22,7 +22,21 @@ Graphics Assets From:
 * [Pipoya Free RPG Character Sprites 32x32](https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32)
 * [Kenney Input Prompts Pixel 16x16](https://kenney.nl/assets/input-prompts-pixel-16)
 
+## Gameplay
+
+The game is in extremely early stages. For discussion on future direction, see: #31
+
+### Controls
+**Arrow Keys / WASD**: Movement
+**L**: Toggle Light/Torch
+**E**: Pick Up Items
+**I**: Open Inventory (non-functional)
+**1-0 (number keys)**: Select Item in Hotbar
+**ESC**: Open Menu
+
 ## Development
+
+This project targets Python 3.7 or greater.
 
 To install the project and all development dependencies run the following command, this should ideally be done in a [virtual environment](https://docs.python.org/3/tutorial/venv.html):
 

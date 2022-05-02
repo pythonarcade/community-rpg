@@ -71,6 +71,17 @@ class MainMenuView(arcade.View):
             align="center",
             width=self.window.width,
         )
+        arcade.draw_text(
+            "Battle Screen (B)",
+            self.window.width / 2,
+            self.window.height - 550,
+            arcade.color.AMAZON,
+            32,
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+            width=self.window.width,
+        )
 
     def setup(self):
         pass
@@ -89,3 +100,6 @@ class MainMenuView(arcade.View):
         elif symbol == arcade.key.N:
             self.window.views["game"].setup()
             self.window.show_view(self.window.views["game"])
+        elif symbol == arcade.key.B:
+            self.window.views["battle"].setup()
+            self.window.show_view(self.window.views["battle"])

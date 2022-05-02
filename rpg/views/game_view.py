@@ -244,14 +244,90 @@ class GameView(arcade.View):
         self.player_sprite.change_x = 0
         self.player_sprite.change_y = 0
 
-        if self.up_pressed and not self.down_pressed:
+        MOVING_UP = (
+            self.up_pressed
+            and not self.down_pressed
+            and not self.right_pressed
+            and not self.left_pressed
+        )
+
+        MOVING_DOWN = (
+            self.down_pressed
+            and not self.up_pressed
+            and not self.right_pressed
+            and not self.left_pressed
+        )
+
+        MOVING_RIGHT = (
+            self.right_pressed
+            and not self.left_pressed
+            and not self.up_pressed
+            and not self.down_pressed
+        )
+
+        MOVING_LEFT = (
+            self.left_pressed
+            and not self.right_pressed
+            and not self.up_pressed
+            and not self.down_pressed
+        )
+
+        MOVING_UP_LEFT = (
+            self.up_pressed
+            and self.left_pressed
+            and not self.down_pressed
+            and not self.right_pressed
+        )
+
+        MOVING_DOWN_LEFT = (
+            self.down_pressed
+            and self.left_pressed
+            and not self.up_pressed
+            and not self.right_pressed
+        )
+
+        MOVING_UP_RIGHT = (
+            self.up_pressed
+            and self.right_pressed
+            and not self.down_pressed
+            and not self.left_pressed
+        )
+
+        MOVING_DOWN_RIGHT = (
+            self.down_pressed
+            and self.right_pressed
+            and not self.up_pressed
+            and not self.left_pressed
+        )
+
+        if MOVING_UP:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED
-        elif self.down_pressed and not self.up_pressed:
+
+        if MOVING_DOWN:
             self.player_sprite.change_y = -constants.MOVEMENT_SPEED
-        if self.left_pressed and not self.right_pressed:
+
+        if MOVING_LEFT:
             self.player_sprite.change_x = -constants.MOVEMENT_SPEED
-        elif self.right_pressed and not self.left_pressed:
+
+        if MOVING_RIGHT:
             self.player_sprite.change_x = constants.MOVEMENT_SPEED
+
+        if MOVING_UP_LEFT:
+            self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+
+        if MOVING_UP_RIGHT:
+            self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
+
+        if MOVING_DOWN_LEFT:
+            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+
+        if MOVING_DOWN_RIGHT:
+            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
+
 
         # Call update to move the sprite
         self.physics_engine.update()
@@ -287,9 +363,12 @@ class GameView(arcade.View):
 
                 # Swap to the new map
                 self.switch_map(map_name, start_x, start_y)
-
-        # Scroll the window to the player
-        self.scroll_to_player()
+            else:
+                # We didn't hit a door, scroll normally
+                self.scroll_to_player()
+        else:
+            # No doors, scroll normally
+            self.scroll_to_player()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
