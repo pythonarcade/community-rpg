@@ -192,6 +192,14 @@ class GameView(arcade.View):
             for map_layer_name in map_layers:
                 map_layers[map_layer_name].draw()
 
+            for item in map_layers.get("searchable", []):
+                arcade.Sprite(
+                    filename=":misc:shiny-stars.png",
+                    center_x=item.center_x,
+                    center_y=item.center_y,
+                    scale=0.8,
+                ).draw()
+
             # Draw all the enemies
             cur_map.characters.draw()
 
