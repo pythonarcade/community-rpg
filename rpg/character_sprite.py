@@ -5,8 +5,17 @@ Animated sprite for characters that walk around.
 
 import arcade
 
+from enum import Enum
 from rpg.constants import SPRITE_SIZE
 
+Direction = Enum('Direction', 'DOWN LEFT RIGHT UP')
+
+SPRITE_INFO = {
+    Direction.DOWN : [0, 1, 2],
+    Direction.LEFT: [3, 4, 5],
+    Direction.RIGHT: [6, 7, 8],
+    Direction.UP: [9, 10, 11],
+}
 
 class CharacterSprite(arcade.Sprite):
     def __init__(self, sheet_name):
@@ -36,25 +45,22 @@ class CharacterSprite(arcade.Sprite):
             self.should_update = 0
             self.cur_texture_index += 1
 
-        if self.change_x > 0:
-            if self.cur_texture_index < 6:
-                self.cur_texture_index = 6
-            elif self.cur_texture_index > 8:
-                self.cur_texture_index = 6
-        elif self.change_x < 0:
-            if self.cur_texture_index < 3:
-                self.cur_texture_index = 3
-            elif self.cur_texture_index > 5:
-                self.cur_texture_index = 3
-        elif self.change_y > 0:
-            if self.cur_texture_index < 9:
-                self.cur_texture_index = 9
-            elif self.cur_texture_index > 11:
-                self.cur_texture_index = 9
+
+        direction = Direction.LEFT
+        slope = self.change_y / (self.change_x + 0.0001)
+        if abs(slope) < 0.8:
+            if self.change_x > 0:
+                direction = Direction.RIGHT
+            else:
+                # technically not necessary, but for readability
+                direction = Direction.LEFT
         else:
-            if self.cur_texture_index < 0:
-                self.cur_texture_index = 0
-            elif self.cur_texture_index > 2:
-                self.cur_texture_index = 0
+            if self.change_y > 0:
+                direction = Direction.UP
+            else:
+                direction = Direction.DOWN
+
+        if self.cur_texture_index not in SPRITE_INFO[direction]:
+            self.cur_texture_index = SPRITE_INFO[direction][0]
 
         self.texture = self.textures[self.cur_texture_index]
