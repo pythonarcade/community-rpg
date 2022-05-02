@@ -5,7 +5,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYEAAZUbSMcMI1e88RN3vjEc\/OiBHHbL6waQfX\/jRQj8p8UcP\/UMt\/KjtL1L9P9jib6ToJwcMJv0DHX6kYgDXTDWN",
+         "data":"eJxjYEAAZUbcGJc8wwjRj46dKdRPqf3k6nfGox8dkKMOV3gPtH5y0gUl+kmJP3roH2rhR21\/ker\/wRZ\/I0U\/OWAw6R\/o8CMVAwCjlDT9",
          "encoding":"base64",
          "height":32,
          "id":9,
@@ -19,7 +19,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJzVU9EKgCAM3P\/\/nWhBJPUr9eBIl8dmmNTBEJPb7rZFdMGfsVQigPdAJRzV4cC7dh\/N36j0N6Xva7rP6aR07sb6CFb9Vj7r1ObGEY35NV1oL6x81IdefNkXpBPxtbpoDtxfT\/d\/pbVOzUPM3nPwPJA\/pAPpert\/Mr\/0NXp\/Zf5W\/1ZY9f2Fj\/qIQs75Kz6e8tGeoOi1P6118\/4f92SnSQ==",
+         "data":"eJzVU9EKgCAM3Mf1\/xBaEEn9Sj04msvDGSY1GKbjttttEV3mTl8y7kHcU2qj+B4y7zJuuffGb5T2N8X3Nd7neFI8d2N9ZFb+VjzzLM2NPRjzl3ihvbDikQ6t8FoXxBPhS3XRHFhfR\/d\/pbZOrocg4tJ4Hqg\/xAPxels\/nV\/31Xt\/df7a\/q1m5fcXPNIRuZ7zV\/p4ikd7grzV\/tTWlfofADGnjQ==",
          "encoding":"base64",
          "height":32,
          "id":2,
@@ -63,6 +63,34 @@
                  "width":32,
                  "x":448,
                  "y":32
+                }, 
+                {
+                 "gid":336,
+                 "height":32,
+                 "id":11,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"map_name",
+                         "type":"string",
+                         "value":"graveyard_dungeon_second_level"
+                        }, 
+                        {
+                         "name":"start_x",
+                         "type":"int",
+                         "value":26
+                        }, 
+                        {
+                         "name":"start_y",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":450.666666666667,
+                 "y":992.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -72,7 +100,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJxjYBgYoM84QBaPglEwCkbBKBgFo4ABAHGOADE=",
+         "data":"eJxjYBgYoM84QBaPglEwCkbBKBgFQxSkM1PPLACRAwCb",
          "encoding":"base64",
          "height":32,
          "id":5,
@@ -81,6 +109,17 @@
          "type":"tilelayer",
          "visible":true,
          "width":16,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"lights",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -174,8 +213,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":450.414417645477,
-                 "y":991.063211691922
+                 "x":416.414417645477,
+                 "y":990.563211691922
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -183,8 +222,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":9,
+ "nextlayerid":11,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "properties":[
         {
