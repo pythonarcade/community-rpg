@@ -1,5 +1,4 @@
 import arcade
-from pyglet.media.codecs import have_ffmpeg, registry
 
 from rpg.character_sprite import CharacterSprite
 from rpg.constants import SPRITE_SIZE
