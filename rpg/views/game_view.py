@@ -131,7 +131,8 @@ class GameView(arcade.View):
             else:
                 item_name = ""
 
-            text = f"{i + 1}: {item_name}"
+            slot = i + 1 if i + 1 < 10 else 0
+            text = f"{slot}: {item_name}"
             arcade.draw_text(text, x, y, arcade.color.ALLOY_ORANGE)
 
     def on_draw(self):
