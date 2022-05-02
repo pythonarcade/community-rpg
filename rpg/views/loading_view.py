@@ -6,7 +6,8 @@ from rpg.draw_bar import draw_bar
 from rpg.load_game_map import load_maps
 from rpg.views.game_view import GameView
 from rpg.views.inventory_view import InventoryView
-from rpg.views.main_menu_view import MainMenuView
+from rpg.views.pause_view import PauseView
+
 
 
 class LoadingView(arcade.View):
@@ -50,11 +51,12 @@ class LoadingView(arcade.View):
         if self.started:
             done, self.progress, self.map_list = load_maps()
             if done:
+
+                self.window.views["pause"] = PauseView()
+                self.window.views["pause"].setup()
                 self.window.views["game"] = GameView(self.map_list)
                 self.window.views["game"].setup()
                 self.window.views["inventory"] = InventoryView()
                 self.window.views["inventory"].setup()
-                self.window.views["main_menu"] = MainMenuView()
-                self.window.views["main_menu"].setup()
 
                 self.window.show_view(self.window.views["game"])
