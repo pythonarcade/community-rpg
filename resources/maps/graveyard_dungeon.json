@@ -5,7 +5,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYEAAZUbSMcMI1e88RN3vjEc\/OiBW3WDVPwpGwSgYBaMANwAA7QEQJQ==",
+         "data":"eJxjYEAAZUbSMcMI1e88RN3vjEc\/OiBHHbL6waQfX\/jRQj8p8UcP\/UMt\/KjtL1L9P9jib6ToJwcMJv0DHX6kYgDXTDWN",
          "encoding":"base64",
          "height":32,
          "id":9,
@@ -19,7 +19,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJxjYECAy0B8Ewu+gkP+CgMquMiAHVzEIU+IT2\/99xhQ\/XcVKn4byr8GpRmg9H0i7ccFiHU\/sfph7iQUbzB8h0jzSXXXYNE\/CkbBKBgFowA3AABI8i+M",
+         "data":"eJzVU9EKgCAM3P\/\/nWhBJPUr9eBIl8dmmNTBEJPb7rZFdMGfsVQigPdAJRzV4cC7dh\/N36j0N6Xva7rP6aR07sb6CFb9Vj7r1ObGEY35NV1oL6x81IdefNkXpBPxtbpoDtxfT\/d\/pbVOzUPM3nPwPJA\/pAPpert\/Mr\/0NXp\/Zf5W\/1ZY9f2Fj\/qIQs75Kz6e8tGeoOi1P6118\/4f92SnSQ==",
          "encoding":"base64",
          "height":32,
          "id":2,
@@ -158,6 +158,24 @@
                  "width":32,
                  "x":382.371562594139,
                  "y":64.4744158023841
+                }, 
+                {
+                 "gid":863,
+                 "height":32,
+                 "id":8,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"item",
+                         "type":"string",
+                         "value":"Sword"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":450.414417645477,
+                 "y":991.063211691922
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -166,7 +184,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":8,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "properties":[
         {
