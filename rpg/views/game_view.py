@@ -325,9 +325,12 @@ class GameView(arcade.View):
 
                 # Swap to the new map
                 self.switch_map(map_name, start_x, start_y)
-
-        # Scroll the window to the player
-        self.scroll_to_player()
+            else:
+                # We didn't hit a door, scroll normally
+                self.scroll_to_player()
+        else:
+            # No doors, scroll normally
+            self.scroll_to_player()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
