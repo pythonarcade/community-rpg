@@ -8,14 +8,15 @@ import arcade
 from enum import Enum
 from rpg.constants import SPRITE_SIZE
 
-Direction = Enum('Direction', 'DOWN LEFT RIGHT UP')
+Direction = Enum("Direction", "DOWN LEFT RIGHT UP")
 
 SPRITE_INFO = {
-    Direction.DOWN : [0, 1, 2],
+    Direction.DOWN: [0, 1, 2],
     Direction.LEFT: [3, 4, 5],
     Direction.RIGHT: [6, 7, 8],
     Direction.UP: [9, 10, 11],
 }
+
 
 class CharacterSprite(arcade.Sprite):
     def __init__(self, sheet_name):
@@ -44,7 +45,6 @@ class CharacterSprite(arcade.Sprite):
         else:
             self.should_update = 0
             self.cur_texture_index += 1
-
 
         direction = Direction.LEFT
         slope = self.change_y / (self.change_x + 0.0001)
