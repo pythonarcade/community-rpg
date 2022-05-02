@@ -7,7 +7,6 @@ import json
 import arcade
 import rpg.constants as constants
 from arcade.experimental.lights import Light
-from rpg.character_sprite import CharacterSprite
 from rpg.player_sprite import PlayerSprite
 from rpg.message_box import MessageBox
 
@@ -284,20 +283,19 @@ class GameView(arcade.View):
 
         if MOVING_UP_LEFT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_UP_RIGHT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_LEFT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_RIGHT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
-
 
         # Call update to move the sprite
         self.physics_engine.update()
