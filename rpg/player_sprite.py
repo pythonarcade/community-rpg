@@ -1,12 +1,15 @@
 import arcade
+from pyglet.media.codecs import have_ffmpeg, registry
+
 from rpg.character_sprite import CharacterSprite
 from rpg.constants import SPRITE_SIZE
+
 
 class PlayerSprite(CharacterSprite):
     def __init__(self, sheet_name):
         super().__init__(sheet_name)
         self.sound_update = 0
-        self.footstep_sound = arcade.load_sound(":sounds:footstep_concrete_000.ogg")
+        self.footstep_sound = arcade.load_sound(":sounds:footstep00.wav")
 
     def on_update(self, delta_time):
         if not self.change_x and not self.change_y:
