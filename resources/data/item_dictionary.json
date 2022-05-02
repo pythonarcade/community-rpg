@@ -4,5 +4,8 @@
             "heal_amount": 5},
   "Dagger": {"short_name": "Dagger",
              "type": "weapon",
-             "damage_amount": 5}
+             "damage_amount": 5},
+  "Sword": {"short_name": "Sword",
+             "type": "weapon",
+             "damage_amount": 10}
 }
