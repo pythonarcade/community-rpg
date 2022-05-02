@@ -5,7 +5,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxTZmRgUB7Fo3gUj+JRPIpH8SgexVTDAEj8VGE=",
+         "data":"eJzt1LENACAIRUF0FVZw\/9mcgUaIOZLX\/2vIFZENVa9jIx8fH9\/E+Pgmx8c3OT6+yZ1dq3svH99Pvlf\/5QKyp4Xh",
          "encoding":"base64",
          "height":20,
          "id":1,
@@ -13,13 +13,13 @@
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":30,
+         "width":56,
          "x":0,
          "y":0
         }, 
         {
          "compression":"zlib",
-         "data":"eJy7zMDAcJMG+DoeuStAfJGBOkCZEZWPz9yLVLT3MgPEH+j2djEjxGBsatoLMuc2kt0wc2ch2TuLRvaCwC00Pi611LYXnU+PcEYGsDBHD2dQOrhDQ3uR7YYBmJ241FPD3nRmTHFcbEoAyG\/Yyog7WNRQs9wgBVAzXY3aO2rvqL30txdXOUNLDCrDAPF5cDA=",
+         "data":"eJztlkEKwjAQRRPc9QhuPZx36b6brvVAUkVarV7FDDI4HYImw6SxJR+GNmnnTx98aDpjTJ+grl+enU28OsE3wJyTYJZPOztdo+9h89nDe8lMaY8Wn88bVBO+esF8mB\/MHvq2hK9dMB\/6DGzdEL5mBXx8vZZ8cp+beWeV5xNyfFfwD+1JxYd7R8IH99J5\/8a3dywPd72QvdHVU8k\/tEeLD\/LI\/6++HGJuY5WbL3buXD2FT1+FT68nB9\/w+xWVnlx8oMrGlUQ5+eZQ4UunrY0riYDNd+5IXfTMFqpRMAfOTy8rqqEd",
          "encoding":"base64",
          "height":20,
          "id":2,
@@ -27,7 +27,202 @@
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":30,
+         "width":56,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":7,
+         "name":"lights",
+         "objects":[
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":781.077399380805,
+                 "y":145.040247678019
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":784.643962848297,
+                 "y":238.959752321981
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":880.941176470588,
+                 "y":143.851393188855
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":880.941176470588,
+                 "y":241.33746130031
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":879.752321981424,
+                 "y":60.6315789473684
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffc9d304"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":75
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":782.266253869969,
+                 "y":51.1207430340557
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffaa0a1a"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":150
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1248.29721362229,
+                 "y":567.083591331269
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"color",
+                         "type":"color",
+                         "value":"#ffaa0a1a"
+                        }, 
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":150
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1087.80185758514,
+                 "y":568.272445820433
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -72,7 +267,7 @@
         }, 
         {
          "compression":"zlib",
-         "data":"eJxjYKA9CGFkYAhjpINFaCAGaGfcANg7EKCXGTub1mAqM3b2KBgFo2AUjIJRMJIBAEWLA7k=",
+         "data":"eJzt1ysOgEAMBNA2VYACFHAtgiLcCIkDB\/ekydoKVvDZMi9pMnJGluheqxD1TDRwyN7sumnUbROHDGmZxc5eLGJnSMMmdvbiEDsDAAD8Taa\/RB55Bb\/d+rpSu1aRV2PfZzTatY28LqF9TzoB2VgM\/Q==",
          "encoding":"base64",
          "height":20,
          "id":4,
@@ -80,7 +275,7 @@
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":30,
+         "width":56,
          "x":0,
          "y":0
         }, 
@@ -95,8 +290,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":2,
+ "nextlayerid":8,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -111,9 +306,13 @@
         {
          "firstgid":1,
          "source":"..\/tilesets\/[Base]BaseChip_pipo.json"
+        }, 
+        {
+         "firstgid":1065,
+         "source":"..\/tilesets\/[A]Grass_pipo.json"
         }],
  "tilewidth":32,
  "type":"map",
  "version":"1.8",
- "width":30
+ "width":56
 }
