@@ -203,9 +203,6 @@ class GameView(arcade.View):
                     scale=0.8,
                 ).draw()
 
-            # Draw all the enemies
-            cur_map.characters.draw()
-
             # Draw the player
             self.player_sprite_list.draw()
             # print(self.player_sprite.position)
