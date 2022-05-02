@@ -8,8 +8,8 @@ import arcade
 import rpg.constants as constants
 from arcade.experimental.lights import Light
 from rpg.character_sprite import CharacterSprite
-from rpg.player_sprite import PlayerSprite
 from rpg.message_box import MessageBox
+from rpg.player_sprite import PlayerSprite
 
 
 class GameView(arcade.View):
@@ -91,7 +91,7 @@ class GameView(arcade.View):
         self.player_sprite_list.append(self.player_sprite)
 
         self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, my_map.wall_list
+            self.player_sprite, my_map.scene["wall_list"]
         )
 
         if my_map.light_layer:
@@ -158,12 +158,8 @@ class GameView(arcade.View):
             # Grab each tile layer from the map
             map_layers = cur_map.map_layers
 
-            # Draw each tile layer from the map
-            for map_layer_name in map_layers:
-                map_layers[map_layer_name].draw()
-
-            # Draw all the enemies
-            cur_map.characters.draw()
+            # Draw scene
+            cur_map.scene.draw()
 
             # Draw the player
             self.player_sprite_list.draw()
@@ -284,20 +280,19 @@ class GameView(arcade.View):
 
         if MOVING_UP_LEFT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_UP_RIGHT:
             self.player_sprite.change_y = constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_LEFT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
-            self.player_sprite.change_x = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED / 1.5
 
         if MOVING_DOWN_RIGHT:
-            self.player_sprite.change_y = - constants.MOVEMENT_SPEED / 1.5
+            self.player_sprite.change_y = -constants.MOVEMENT_SPEED / 1.5
             self.player_sprite.change_x = constants.MOVEMENT_SPEED / 1.5
-
 
         # Call update to move the sprite
         self.physics_engine.update()
@@ -308,7 +303,11 @@ class GameView(arcade.View):
         self.player_light.position = self.player_sprite.position
 
         # Update the characters
-        self.map_list[self.cur_map_name].characters.on_update(delta_time)
+        try:
+            self.map_list[self.cur_map_name].scene["characters"].on_update(delta_time)
+        except KeyError:
+            # no characters on map
+            pass
 
         # --- Manage doors ---
         map_layers = self.map_list[self.cur_map_name].map_layers

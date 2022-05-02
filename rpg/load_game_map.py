@@ -16,11 +16,10 @@ from rpg.path_following_sprite import PathFollowingSprite
 
 class GameMap:
     name = None
+    scene = None
     map_layers = None
-    wall_list = None
     light_layer = None
     map_size = None
-    characters = None
     properties = None
     background_color = arcade.color.AMAZON
 
@@ -32,11 +31,10 @@ def load_map(map_name):
 
     game_map = GameMap()
     game_map.map_layers = OrderedDict()
-    game_map.characters = arcade.SpriteList()
+
     game_map.light_layer = LightLayer(100, 100)
 
     # List of blocking sprites
-    game_map.wall_list = arcade.SpriteList()
 
     layer_options = {
         "trees_blocking": {
@@ -58,6 +56,8 @@ def load_map(map_name):
     my_map = arcade.tilemap.load_tilemap(
         map_name, scaling=TILE_SCALING, layer_options=layer_options
     )
+
+    game_map.scene = arcade.Scene.from_tilemap(my_map)
 
     if "characters" in my_map.object_lists:
         f = open("resources/data/characters_dictionary.json")
@@ -107,7 +107,7 @@ def load_map(map_name):
                 continue
 
             print(f"Adding character {character_type} at {character_sprite.position}")
-            game_map.characters.append(character_sprite)
+            game_map.scene.add_sprite("characters", character_sprite)
 
     if "lights" in my_map.object_lists:
         lights_object_list = my_map.object_lists["lights"]
@@ -157,9 +157,12 @@ def load_map(map_name):
     game_map.properties = my_map.properties
 
     # Any layer with '_blocking' in it, will be a wall
-    for layer in game_map.map_layers:
+    game_map.scene.add_sprite_list("wall_list", use_spatial_hash=True)
+    for layer, sprite_list in game_map.map_layers.items():
         if "_blocking" in layer:
-            game_map.wall_list.extend(game_map.map_layers[layer])
+            game_map.scene.remove_sprite_list_by_object(sprite_list)
+
+            game_map.scene["wall_list"].extend(sprite_list)
 
     return game_map
 
