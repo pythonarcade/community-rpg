@@ -19,6 +19,7 @@ class MyWindow(arcade.Window):
         arcade.resources.add_resource_handle("maps", "resources/maps")
         arcade.resources.add_resource_handle("data", "resources/data")
         arcade.resources.add_resource_handle("sounds", "resources/sounds")
+        arcade.resources.add_resource_handle("misc", "resources/misc")
 
 
 def main():
