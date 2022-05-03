@@ -12,6 +12,7 @@ from arcade.experimental.lights import Light, LightLayer
 from rpg.sprites.character_sprite import CharacterSprite
 from rpg.constants import TILE_SCALING
 from rpg.sprites.path_following_sprite import PathFollowingSprite
+from rpg.sprites.random_walking_sprite import RandomWalkingSprite
 
 
 class GameMap:
@@ -84,9 +85,14 @@ def load_map(map_name):
 
             if isinstance(shape, list) and len(shape) == 2:
                 # Point
-                character_sprite = CharacterSprite(
-                    f":characters:{character_data['images']}"
-                )
+                if character_object.properties.get("movement") == "random":
+                    character_sprite = RandomWalkingSprite(
+                        f":characters:{character_data['images']}", game_map.scene
+                    )
+                else:
+                    character_sprite = CharacterSprite(
+                        f":characters:{character_data['images']}"
+                    )
                 character_sprite.position = shape
             elif isinstance(shape, list) and len(shape[0]) == 2:
                 # Rect or polygon.

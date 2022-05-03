@@ -389,6 +389,29 @@
                  "width":0,
                  "x":25.3333333333333,
                  "y":1825.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"movement",
+                         "type":"string",
+                         "value":"random"
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"white_cat"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1179.46345975948,
+                 "y":1001.38760407031
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -396,8 +419,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":15,
- "nextobjectid":11,
+ "nextlayerid":16,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.8.4",
