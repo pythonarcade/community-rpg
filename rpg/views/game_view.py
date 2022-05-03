@@ -95,13 +95,10 @@ class DebugMenu(arcade.gui.UIBorder, arcade.gui.UIWindowLikeMixin):
             self.noclip_button._style = (
                 self.off_style if not self.noclip_status else self.on_style
             )
-            print(self.noclip_status)
-            print(self.noclip_button.style)
             self.noclip_button.clear()
 
-            self.noclip_callback
+            callback(status=self.noclip_status)
 
-        self.noclip_callback = callback
         self.noclip_status = False
         self.noclip_button = arcade.gui.UIFlatButton(
             text="noclip", style=self.off_style
@@ -137,7 +134,7 @@ class GameView(arcade.View):
 
         arcade.set_background_color(arcade.color.AMAZON)
 
-        self.debug = False
+        self.setup_debug_menu()
 
         self.ui_manager = arcade.gui.UIManager()
         self.ui_manager.enable()
@@ -195,14 +192,14 @@ class GameView(arcade.View):
         self.cur_map_name = map_name
 
         try:
-            my_map = self.map_list[self.cur_map_name]
+            self.my_map = self.map_list[self.cur_map_name]
         except KeyError:
             raise KeyError(f"Unable to find map named '{map_name}'.")
 
-        if my_map.background_color:
-            arcade.set_background_color(my_map.background_color)
+        if self.my_map.background_color:
+            arcade.set_background_color(self.my_map.background_color)
 
-        map_height = my_map.map_size[1]
+        map_height = self.my_map.map_size[1]
         self.player_sprite.center_x = (
             start_x * constants.SPRITE_SIZE + constants.SPRITE_SIZE / 2
         )
@@ -213,12 +210,22 @@ class GameView(arcade.View):
         self.player_sprite_list = arcade.SpriteList()
         self.player_sprite_list.append(self.player_sprite)
 
-        self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player_sprite, my_map.scene["wall_list"]
-        )
+        self.setup_physics()
 
-        if my_map.light_layer:
-            my_map.light_layer.resize(self.window.width, self.window.height)
+        if self.my_map.light_layer:
+            self.my_map.light_layer.resize(self.window.width, self.window.height)
+
+    def setup_physics(self):
+        if self.noclip_status:
+            # make an empty spritelist so the character does not collide with anyting
+            self.physics_engine = arcade.PhysicsEngineSimple(
+                self.player_sprite, arcade.SpriteList()
+            )
+        else:
+            # use the walls as normal
+            self.physics_engine = arcade.PhysicsEngineSimple(
+                self.player_sprite, self.my_map.scene["wall_list"]
+            )
 
     def setup(self):
         """Set up the game variables. Call to re-start the game."""
@@ -232,14 +239,12 @@ class GameView(arcade.View):
         self.switch_map(constants.STARTING_MAP, start_x, start_y)
         self.cur_map_name = constants.STARTING_MAP
 
-        self.setup_debug_menu()
-        
         # Set up the hotbar
         self.load_hotbar_sprites()
 
     def load_hotbar_sprites(self):
         """Load the sprites for the hotbar at the bottom of the screen.
-        
+
         Loads the controls sprite tileset and selects only the number pad button sprites.
         These will be visual representations of number keypads (1️⃣, 2️⃣, 3️⃣, ..., 0️⃣)
         to clarify that the hotkey bar can be accessed through these keypresses.
@@ -254,10 +259,12 @@ class GameView(arcade.View):
             sprite_height=16,
             columns=34,
             count=816,
-            margin=1)[first_number_pad_sprite_index:last_number_pad_sprite_index]
+            margin=1,
+        )[first_number_pad_sprite_index:last_number_pad_sprite_index]
 
     def setup_debug_menu(self):
-        # debug menu stuff
+        self.debug = False
+
         self.debug_menu = DebugMenu(
             width=450,
             height=200,
@@ -266,6 +273,7 @@ class GameView(arcade.View):
         )
 
         self.original_movement_speed = constants.MOVEMENT_SPEED
+        self.noclip_status = False
 
     def enable_debug_menu(self):
         self.ui_manager.add(self.debug_menu)
@@ -274,7 +282,9 @@ class GameView(arcade.View):
         self.ui_manager.remove(self.debug_menu)
 
     def noclip(self, *args, status: bool):
-        pass
+        self.noclip_status = status
+
+        self.setup_physics()
 
     def hyper(self, *args, status: bool):
         constants.MOVEMENT_SPEED = (
@@ -294,7 +304,9 @@ class GameView(arcade.View):
         x = self.window.width / 2
         y = vertical_hotbar_location
 
-        arcade.draw_rectangle_filled(x, y, self.window.width, hotbar_height, arcade.color.ALMOND)
+        arcade.draw_rectangle_filled(
+            x, y, self.window.width, hotbar_height, arcade.color.ALMOND
+        )
         for i in range(capacity):
             y = vertical_hotbar_location
             x = i * field_width + 5
