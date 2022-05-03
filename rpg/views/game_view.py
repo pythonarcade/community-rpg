@@ -3,13 +3,128 @@ Main game view
 """
 
 import json
+from functools import partial
+from turtle import bgcolor, color
+from typing import Callable
 
 import arcade
+import arcade.gui
 import rpg.constants as constants
 from arcade.experimental.lights import Light
 from rpg.character_sprite import CharacterSprite
 from rpg.message_box import MessageBox
 from rpg.player_sprite import PlayerSprite
+
+
+class DebugMenu(arcade.gui.UIBorder, arcade.gui.UIWindowLikeMixin):
+    def __init__(
+        self,
+        *,
+        width: float,
+        height: float,
+        noclip_callback: Callable,
+        hyper_callback: Callable,
+    ):
+
+        self.off_style = {
+            "bg_color": arcade.color.BLACK,
+        }
+
+        self.on_style = {
+            "bg_color": arcade.color.REDWOOD,
+        }
+
+        self.setup_noclip(noclip_callback)
+        self.setup_hyper(hyper_callback)
+
+        space = 10
+
+        self._title = arcade.gui.UITextArea(
+            text="DEBUG MENU",
+            width=width - space,
+            height=height - space,
+            font_size=14,
+            text_color=arcade.color.BLACK,
+        )
+
+        group = arcade.gui.UIPadding(
+            bg_color=(255, 255, 255, 255),
+            child=arcade.gui.UILayout(
+                width=width,
+                height=height,
+                children=[
+                    arcade.gui.UIAnchorWidget(
+                        child=self._title,
+                        anchor_x="left",
+                        anchor_y="top",
+                        align_x=10,
+                        align_y=-10,
+                    ),
+                    arcade.gui.UIAnchorWidget(
+                        child=arcade.gui.UIBoxLayout(
+                            x=0,
+                            y=0,
+                            children=[
+                                arcade.gui.UIPadding(
+                                    child=self.noclip_button, pading=(5, 5, 5, 5)
+                                ),
+                                arcade.gui.UIPadding(
+                                    child=self.hyper_button, padding=(5, 5, 5, 5)
+                                ),
+                            ],
+                            vertical=False,
+                        ),
+                        anchor_x="left",
+                        anchor_y="bottom",
+                        align_x=5,
+                    ),
+                ],
+            ),
+        )
+
+        # x and y don't seem to actually change where this is created. bug?
+        # TODO: make this not appear at the complete bottom left (top left would be better?)
+        super().__init__(border_width=5, child=group)
+
+    def setup_noclip(self, callback: Callable):
+        # disable player collision
+
+        def toggle(*args):
+            # toggle state on click
+            self.noclip_status = True if not self.noclip_status else False
+            self.noclip_button._style = (
+                self.off_style if not self.noclip_status else self.on_style
+            )
+            print(self.noclip_status)
+            print(self.noclip_button.style)
+            self.noclip_button.clear()
+
+            self.noclip_callback
+
+        self.noclip_callback = callback
+        self.noclip_status = False
+        self.noclip_button = arcade.gui.UIFlatButton(
+            text="noclip", style=self.off_style
+        )
+        self.noclip_button.on_click = toggle  # type: ignore
+
+    def setup_hyper(self, callback: Callable):
+        # increase player speed
+
+        def toggle(*args):
+            # toggle state on click
+            self.hyper_status = True if not self.hyper_status else False
+            self.hyper_button._style = (
+                self.off_style if not self.hyper_status else self.on_style
+            )
+            self.hyper_button.clear()
+
+            callback(status=self.hyper_status)
+
+        self.hyper_status = False
+
+        self.hyper_button = arcade.gui.UIFlatButton(text="hyper", style=self.off_style)
+        self.hyper_button.on_click = toggle  # type: ignore
 
 
 class GameView(arcade.View):
@@ -21,6 +136,11 @@ class GameView(arcade.View):
         super().__init__()
 
         arcade.set_background_color(arcade.color.AMAZON)
+
+        self.debug = False
+
+        self.ui_manager = arcade.gui.UIManager()
+        self.ui_manager.enable()
 
         # Player sprite
         self.player_sprite = None
@@ -109,6 +229,35 @@ class GameView(arcade.View):
         self.switch_map(constants.STARTING_MAP, start_x, start_y)
         self.cur_map_name = constants.STARTING_MAP
 
+        self.setup_debug_menu()
+
+    def setup_debug_menu(self):
+        # debug menu stuff
+        self.debug_menu = DebugMenu(
+            width=450,
+            height=200,
+            noclip_callback=self.noclip,
+            hyper_callback=self.hyper,
+        )
+
+        self.original_movement_speed = constants.MOVEMENT_SPEED
+
+    def enable_debug_menu(self):
+        self.ui_manager.add(self.debug_menu)
+
+    def disable_debug_menu(self):
+        self.ui_manager.remove(self.debug_menu)
+
+    def noclip(self, *args, status: bool):
+        pass
+
+    def hyper(self, *args, status: bool):
+        constants.MOVEMENT_SPEED = (
+            int(self.original_movement_speed * 3.5)
+            if status
+            else self.original_movement_speed
+        )
+
     def draw_inventory(self):
         capacity = 10
 
@@ -185,6 +334,9 @@ class GameView(arcade.View):
         # Draw any message boxes
         if self.message_box:
             self.message_box.on_draw()
+
+        # draw GUI
+        self.ui_manager.draw()
 
     def scroll_to_player(self, speed=constants.CAMERA_SPEED):
         """Manage Scrolling"""
@@ -386,6 +538,13 @@ class GameView(arcade.View):
                 cur_map.light_layer.remove(self.player_light)
             else:
                 cur_map.light_layer.add(self.player_light)
+        elif key == arcade.key.GRAVE:  # `
+            # toggle debug
+            self.debug = True if not self.debug else False
+            if self.debug:
+                self.enable_debug_menu()
+            else:
+                self.disable_debug_menu()
 
     def close_message_box(self):
         self.message_box = None
