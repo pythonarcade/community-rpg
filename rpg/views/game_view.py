@@ -11,9 +11,9 @@ import arcade
 import arcade.gui
 import rpg.constants as constants
 from arcade.experimental.lights import Light
-from rpg.character_sprite import CharacterSprite
+from pyglet.math import Vec2
 from rpg.message_box import MessageBox
-from rpg.player_sprite import PlayerSprite
+from rpg.sprites.player_sprite import PlayerSprite
 
 
 class DebugMenu(arcade.gui.UIBorder, arcade.gui.UIWindowLikeMixin):
@@ -162,6 +162,9 @@ class GameView(arcade.View):
         self.cur_map_name = None
 
         self.message_box = None
+
+        # Selected Items Hotbar
+        self.hotbar_sprite_list = None
         self.selected_item = 1
 
         f = open("resources/data/item_dictionary.json")
@@ -230,6 +233,28 @@ class GameView(arcade.View):
         self.cur_map_name = constants.STARTING_MAP
 
         self.setup_debug_menu()
+        
+        # Set up the hotbar
+        self.load_hotbar_sprites()
+
+    def load_hotbar_sprites(self):
+        """Load the sprites for the hotbar at the bottom of the screen.
+        
+        Loads the controls sprite tileset and selects only the number pad button sprites.
+        These will be visual representations of number keypads (1️⃣, 2️⃣, 3️⃣, ..., 0️⃣)
+        to clarify that the hotkey bar can be accessed through these keypresses.
+        """
+
+        first_number_pad_sprite_index = 51
+        last_number_pad_sprite_index = 61
+
+        self.hotbar_sprite_list = arcade.load_spritesheet(
+            file_name="resources/tilesets/input_prompts_kenney.png",
+            sprite_width=16,
+            sprite_height=16,
+            columns=34,
+            count=816,
+            margin=1)[first_number_pad_sprite_index:last_number_pad_sprite_index]
 
     def setup_debug_menu(self):
         # debug menu stuff
@@ -260,19 +285,22 @@ class GameView(arcade.View):
 
     def draw_inventory(self):
         capacity = 10
+        vertical_hotbar_location = 40
+        hotbar_height = 80
+        sprite_height = 16
 
         field_width = self.window.width / (capacity + 1)
 
         x = self.window.width / 2
-        y = 40
+        y = vertical_hotbar_location
 
-        arcade.draw_rectangle_filled(x, y, self.window.width, 80, arcade.color.ALMOND)
+        arcade.draw_rectangle_filled(x, y, self.window.width, hotbar_height, arcade.color.ALMOND)
         for i in range(capacity):
-            y = 40
+            y = vertical_hotbar_location
             x = i * field_width + 5
             if i == self.selected_item - 1:
                 arcade.draw_lrtb_rectangle_outline(
-                    x - 3, x + field_width - 5, y + 20, y - 5, arcade.color.BLACK, 2
+                    x - 6, x + field_width - 15, y + 25, y - 10, arcade.color.BLACK, 2
                 )
 
             if len(self.player_sprite.inventory) > i:
@@ -280,9 +308,11 @@ class GameView(arcade.View):
             else:
                 item_name = ""
 
-            slot = i + 1 if i + 1 < 10 else 0
-            text = f"{slot}: {item_name}"
-            arcade.draw_text(text, x, y, arcade.color.ALLOY_ORANGE)
+            hotkey_sprite = self.hotbar_sprite_list[i]
+            hotkey_sprite.draw_scaled(x + sprite_height / 2, y + sprite_height / 2, 2.0)
+            # Add whitespace so the item text doesn't hide behind the number pad sprite
+            text = f"     {item_name}"
+            arcade.draw_text(text, x, y, arcade.color.ALLOY_ORANGE, 16)
 
     def on_draw(self):
         """
@@ -309,6 +339,14 @@ class GameView(arcade.View):
 
             # Draw scene
             cur_map.scene.draw()
+
+            for item in map_layers.get("searchable", []):
+                arcade.Sprite(
+                    filename=":misc:shiny-stars.png",
+                    center_x=item.center_x,
+                    center_y=item.center_y,
+                    scale=0.8,
+                ).draw()
 
             # Draw the player
             self.player_sprite_list.draw()
@@ -341,11 +379,11 @@ class GameView(arcade.View):
     def scroll_to_player(self, speed=constants.CAMERA_SPEED):
         """Manage Scrolling"""
 
-        position = (
+        vector = Vec2(
             self.player_sprite.center_x - self.window.width / 2,
             self.player_sprite.center_y - self.window.height / 2,
         )
-        self.camera_sprites.move_to(position, speed)
+        self.camera_sprites.move_to(vector, speed)
 
     def on_show_view(self):
         # Set background color

@@ -1,6 +1,6 @@
 import arcade
 
-from rpg.character_sprite import CharacterSprite
+from rpg.sprites.character_sprite import CharacterSprite
 
 
 class PlayerSprite(CharacterSprite):
