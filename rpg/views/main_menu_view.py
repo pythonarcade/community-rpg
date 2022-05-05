@@ -4,35 +4,35 @@
 from curses import window
 import arcade
 import arcade.gui
-from rpg import __main__
 
-class GameView(arcade.View):
-    def __init__(self):
-        self.window.show_view(self.window.views["game"])
+# self.window.show_view(self.window.views["game"])
 
-    def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:
-            pause = PauseView(self)
-            self.window.show_view(pause)
-
-class PauseView(arcade.View):
+class MainMenuView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
+        print(arcade.View.window.views)
+        self.v_box = arcade.gui.UIBoxLayout()
         self.game_view = game_view
+        
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=200)
         self.v_box.add(start_button.with_space_around(bottom=20))
+        
         settings_button = arcade.gui.UIFlatButton(text="Settings", width=200)
         self.v_box.add(settings_button.with_space_around(bottom=20))
 
-        def on_click_start(self):
-            print('start')
+    def on_click_start(self):
+        print('start')
 
-        def on_click_settings(self):
-            print('settings')
+    def on_click_settings(self):
+        print('settings')
         
-        def on_key_press(self, key, _modifiers):
-            if key == arcade.key.ESCAPE:
-                self.window.show_view(self.game_view)
+    def on_key_press(self, key, _modifiers):
+        if key == arcade.key.ESCAPE:
+            print('yo I like your cut G')
+            self.window.show_view(self.window.views["game"])
+        
+    def setup(self):
+        pass
 
 class QuitButton(arcade.gui.UIFlatButton):
     def on_click(self, event: arcade.gui.UIOnClickEvent):
