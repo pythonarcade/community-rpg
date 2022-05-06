@@ -12,7 +12,8 @@ class MainMenuView(arcade.View):
     This class acts as the game view for the main menu screen and its buttons. Accessed by hitting ESC. That logic can be referenced in game_view.py
     '''
     def __init__(self, game_view):
-        super().__init__()        
+        super().__init__()
+        self.started = False        
         self.game_view = game_view
         
         # --- Required for all code that uses UI element, a UIManager to handle the UI.
@@ -22,15 +23,6 @@ class MainMenuView(arcade.View):
         # Create a vertical BoxGroup to align buttons
         self.v_box = arcade.gui.UIBoxLayout()
         
-         # Create a widget to hold the v_box widget, that will center the buttons
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
-                child=self.v_box)
-        )        
-        
-        #create buttons, add them to V_box, and assign callback function as .on_click() 
         resume_button = arcade.gui.UIFlatButton(text="Resume Game", width=200)
         self.v_box.add(resume_button.with_space_around(bottom=20))        
         resume_button.on_click = self.on_click_resume
@@ -50,18 +42,24 @@ class MainMenuView(arcade.View):
         quit_button = arcade.gui.UIFlatButton(text="Quit", width=200)
         self.v_box.add(quit_button.with_space_around(bottom=20))
         quit_button.on_click = self.on_click_quit
+        # Create a widget to hold the v_box widget, that will center the buttons
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x="center_x",
+                anchor_y="center_y",
+                child=self.v_box)
+        )      
         
-        
-    def show_buttons(self):
+    def on_draw(self):
         '''
         Method that redraws the UI buttons each time we call the pause menu. See game_view.py for more.
         input: None
         output: None
         '''
-        print('show_buttons()')
+        arcade.start_render()
         self.clear()
         self.manager.draw()
-       
+
     # call back methods for buttons:
     def on_click_resume(self, event):
         print('show game view')
