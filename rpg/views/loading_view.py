@@ -56,7 +56,7 @@ class LoadingView(arcade.View):
                 self.window.views["game"].setup()
                 self.window.views["inventory"] = InventoryView()
                 self.window.views["inventory"].setup()
-                self.window.views["main_menu"] = MainMenuView()
+                self.window.views["main_menu"] = MainMenuView(self.window.views["game"])
                 self.window.views["main_menu"].setup()
                 self.window.views["settings"] = SettingsView()
                 self.window.views["settings"].setup()
