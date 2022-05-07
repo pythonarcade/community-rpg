@@ -559,8 +559,6 @@ class GameView(arcade.View):
             self.window.show_view(self.window.views["inventory"])
         elif key == arcade.key.ESCAPE:
             self.window.show_view(self.window.views["main_menu"])
-            self.window.views["main_menu"].show_buttons()
-            
         elif key in constants.SEARCH:
             self.search()
         elif key == arcade.key.KEY_1:
