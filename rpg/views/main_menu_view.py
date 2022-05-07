@@ -10,9 +10,8 @@ class MainMenuView(arcade.View):
     This class acts as the game view for the main menu screen and its buttons. Accessed by hitting ESC. That logic can be referenced in game_view.py
     """
 
-    def __init__(self, game_view):
+    def __init__(self):
         super().__init__()
-        self.game_view = game_view
 
         # --- Required for all code that uses UI element, a UIManager to handle the UI.
         self.manager = arcade.gui.UIManager()
