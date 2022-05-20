@@ -27,12 +27,12 @@ Graphics Assets From:
 The game is in extremely early stages. For discussion on future direction, see: #31
 
 ### Controls
-**Arrow Keys / WASD**: Movement
-**L**: Toggle Light/Torch
-**E**: Pick Up Items
-**I**: Open Inventory (non-functional)
-**1-0 (number keys)**: Select Item in Hotbar
-**ESC**: Open Menu
+- **Movement:** Arrow Keys / WASD
+- **Toggle Light/Torch:** L
+- **Pick Up Items:** E
+- **Open Inventory:** I *(This screen doesn't do anything yet)*
+- **Select Current Item in Hotbar:** 1-0 *(Number keys)*
+- **Open Menu:** ESC
 
 ## Development
 
