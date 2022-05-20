@@ -24,7 +24,9 @@ Graphics Assets From:
 
 ## Gameplay
 
-The game is in extremely early stages. For discussion on future direction, see: #31
+The game is in extremely early stages. For discussion on future direction, see:
+* [the github discussion board](https://github.com/pythonarcade/community-rpg/discussions).
+* [the #community-ideas channel on Arcade's discord server](https://discord.com/channels/458662222697070613/704736572603629589)
 
 ### Controls
 - **Movement:** Arrow Keys / WASD
