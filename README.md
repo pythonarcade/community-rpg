@@ -31,7 +31,7 @@ The game is in extremely early stages. For discussion on future direction, see: 
 - **Toggle Light/Torch:** L
 - **Pick Up Items:** E
 - **Open Inventory:** I *(This screen doesn't do anything yet)*
-- **Select Current Item in Hotbar:** 1-0 (number keys)
+- **Select Current Item in Hotbar:** 1-0 *(Number keys)*
 - **Open Menu:** ESC
 
 ## Development
