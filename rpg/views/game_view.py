@@ -4,7 +4,6 @@ Main game view
 
 import json
 from functools import partial
-from turtle import bgcolor, color
 from typing import Callable
 
 import arcade

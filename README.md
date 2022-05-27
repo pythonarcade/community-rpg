@@ -24,15 +24,17 @@ Graphics Assets From:
 
 ## Gameplay
 
-The game is in extremely early stages. For discussion on future direction, see: #31
+The game is in extremely early stages. For discussion on future direction, see:
+* [the github discussion board](https://github.com/pythonarcade/community-rpg/discussions).
+* [the #community-ideas channel on Arcade's discord server](https://discord.com/channels/458662222697070613/704736572603629589)
 
 ### Controls
-**Arrow Keys / WASD**: Movement
-**L**: Toggle Light/Torch
-**E**: Pick Up Items
-**I**: Open Inventory (non-functional)
-**1-0 (number keys)**: Select Item in Hotbar
-**ESC**: Open Menu
+- **Movement:** Arrow Keys / WASD
+- **Toggle Light/Torch:** L
+- **Pick Up Items:** E
+- **Open Inventory:** I *(This screen doesn't do anything yet)*
+- **Select Current Item in Hotbar:** 1-0 *(Number keys)*
+- **Open Menu:** ESC
 
 ## Development
 
