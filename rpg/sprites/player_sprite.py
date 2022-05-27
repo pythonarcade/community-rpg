@@ -12,6 +12,10 @@ class PlayerSprite(CharacterSprite):
     def on_update(self, delta_time):
         super().on_update(delta_time)
 
+        if not self.change_x and not self.change_y:
+            self.sound_update = 0
+            return
+
         if self.should_update > 3:
             self.sound_update += 1
 
