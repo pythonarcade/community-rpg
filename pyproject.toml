@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 88
 py36 = true
@@ -14,3 +18,36 @@ exclude = '''
   | dist
 )/'''
 
+# FIXME: Include "resources/*"
+[tool.poetry]
+name = "community-rpg"
+version = "0.1.0"
+description = "An Open Source RPG Game developed with Python using the Arcade library."
+authors = ["Paul Vincent Craven <paul.craven@simpson.edu>"]
+license = "MIT"
+repository = "https://github.com/pythonarcade/community-rpg"
+include = ["LICENSE"]
+readme = "README.md"
+packages = [{include = "community_rpg"}]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Games/Entertainment :: Role-Playing",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+arcade = ">=2.6.10"
+
+[tool.poetry.group.dev.dependencies]
+black = ">=22.8.0"
+flake8 = ">=5.0.4"
+isort = ">=5.10.1"
+pre-commit = ">=2.20.0"
