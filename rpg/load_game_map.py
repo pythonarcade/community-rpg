@@ -7,19 +7,18 @@ from collections import OrderedDict
 from os.path import isfile, join
 
 import arcade
-from arcade.experimental.lights import Light, LightLayer
 
 from rpg.sprites.character_sprite import CharacterSprite
 from rpg.constants import TILE_SCALING
 from rpg.sprites.path_following_sprite import PathFollowingSprite
 from rpg.sprites.random_walking_sprite import RandomWalkingSprite
 
+GOD_MODE = False
 
 class GameMap:
     name = None
     scene = None
     map_layers = None
-    light_layer = None
     map_size = None
     properties = None
     background_color = arcade.color.AMAZON
@@ -32,8 +31,6 @@ def load_map(map_name):
 
     game_map = GameMap()
     game_map.map_layers = OrderedDict()
-
-    game_map.light_layer = LightLayer(100, 100)
 
     # List of blocking sprites
 
@@ -115,41 +112,6 @@ def load_map(map_name):
             print(f"Adding character {character_type} at {character_sprite.position}")
             game_map.scene.add_sprite("characters", character_sprite)
 
-    if "lights" in my_map.object_lists:
-        lights_object_list = my_map.object_lists["lights"]
-
-        for light_object in lights_object_list:
-            if "color" not in light_object.properties:
-                print(f"No color for light in map {map_name}.")
-                continue
-
-            shape = light_object.shape
-
-            if isinstance(shape, list) and len(shape) == 2:
-                # Point
-                if "radius" in light_object.properties:
-                    radius = light_object.properties["radius"]
-                else:
-                    radius = 150
-                mode = "soft"
-                color = light_object.properties["color"]
-                color = (color.red, color.green, color.blue)
-                light = Light(shape[0], shape[1], radius, color, mode)
-                game_map.light_layer.add(light)
-                print("Added light", color, "radius", radius)
-            else:
-                print("Failed to add light")
-    else:
-        # Hack
-        x = 0
-        y = 0
-        radius = 1
-        mode = "soft"
-        color = arcade.csscolor.WHITE
-        dummy_light = Light(x, y, radius, color, mode)
-        game_map.light_layer.add(dummy_light)
-        print("Added default light")
-
     # Get all the tiled sprite lists
     # Get all the tiled sprite lists
     game_map.map_layers = my_map.sprite_lists
@@ -165,8 +127,11 @@ def load_map(map_name):
     # Any layer with '_blocking' in it, will be a wall
     game_map.scene.add_sprite_list("wall_list", use_spatial_hash=True)
     for layer, sprite_list in game_map.map_layers.items():
-        if "_blocking" in layer:
-            game_map.scene.remove_sprite_list_by_object(sprite_list)
+        if "_blocking" in layer and not GOD_MODE:
+            try:
+              game_map.scene.remove_sprite_list_by_object(sprite_list)
+            except:
+              print(f'{layer} has no objects')
 
             game_map.scene["wall_list"].extend(sprite_list)
 

@@ -10,7 +10,7 @@ TILE_SCALING = 1.0
 SPRITE_SIZE = 32
 
 # How fast does the player move
-MOVEMENT_SPEED = 3
+MOVEMENT_SPEED = 10
 
 # How many pixels to keep as a minimum margin between the character
 # and the edge of the screen.
@@ -20,9 +20,9 @@ BOTTOM_VIEWPORT_MARGIN = 300
 TOP_VIEWPORT_MARGIN = 300
 
 # What map, and what position we start at
-STARTING_MAP = "main_map"
-STARTING_X = 33
-STARTING_Y = 16
+STARTING_MAP = "main_map_new"
+STARTING_X = 110
+STARTING_Y = 105
 
 # Key mappings
 KEY_UP = [arcade.key.UP, arcade.key.W]

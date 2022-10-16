@@ -27,10 +27,6 @@ class MainMenuView(arcade.View):
         self.v_box.add(settings_button.with_space_around(bottom=20))
         settings_button.on_click = self.on_click_settings
 
-        battle_button = arcade.gui.UIFlatButton(text="Battle Screen", width=200)
-        self.v_box.add(battle_button.with_space_around(bottom=20))
-        battle_button.on_click = self.on_click_battle
-
         new_game_button = arcade.gui.UIFlatButton(text="New Game", width=200)
         self.v_box.add(new_game_button.with_space_around(bottom=20))
         new_game_button.on_click = self.on_click_new_game
@@ -69,11 +65,6 @@ class MainMenuView(arcade.View):
     def on_click_settings(self, event):
         print("show settings view")
         self.window.show_view(self.window.views["settings"])
-
-    def on_click_battle(self, event):
-        print("battle screen")
-        self.window.views["battle"].setup()
-        self.window.show_view(self.window.views["battle"])
 
     def on_click_new_game(self, event):
         print("restart game")

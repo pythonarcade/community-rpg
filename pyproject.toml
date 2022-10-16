@@ -18,7 +18,6 @@ exclude = '''
   | dist
 )/'''
 
-# FIXME: Include "resources/*"
 [tool.poetry]
 name = "community-rpg"
 version = "0.1.0"

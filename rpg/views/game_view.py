@@ -9,118 +9,9 @@ from typing import Callable
 import arcade
 import arcade.gui
 import rpg.constants as constants
-from arcade.experimental.lights import Light
 from pyglet.math import Vec2
 from rpg.message_box import MessageBox
 from rpg.sprites.player_sprite import PlayerSprite
-
-
-class DebugMenu(arcade.gui.UIBorder, arcade.gui.UIWindowLikeMixin):
-    def __init__(
-        self,
-        *,
-        width: float,
-        height: float,
-        noclip_callback: Callable,
-        hyper_callback: Callable,
-    ):
-
-        self.off_style = {
-            "bg_color": arcade.color.BLACK,
-        }
-
-        self.on_style = {
-            "bg_color": arcade.color.REDWOOD,
-        }
-
-        self.setup_noclip(noclip_callback)
-        self.setup_hyper(hyper_callback)
-
-        space = 10
-
-        self._title = arcade.gui.UITextArea(
-            text="DEBUG MENU",
-            width=width - space,
-            height=height - space,
-            font_size=14,
-            text_color=arcade.color.BLACK,
-        )
-
-        group = arcade.gui.UIPadding(
-            bg_color=(255, 255, 255, 255),
-            child=arcade.gui.UILayout(
-                width=width,
-                height=height,
-                children=[
-                    arcade.gui.UIAnchorWidget(
-                        child=self._title,
-                        anchor_x="left",
-                        anchor_y="top",
-                        align_x=10,
-                        align_y=-10,
-                    ),
-                    arcade.gui.UIAnchorWidget(
-                        child=arcade.gui.UIBoxLayout(
-                            x=0,
-                            y=0,
-                            children=[
-                                arcade.gui.UIPadding(
-                                    child=self.noclip_button, pading=(5, 5, 5, 5)
-                                ),
-                                arcade.gui.UIPadding(
-                                    child=self.hyper_button, padding=(5, 5, 5, 5)
-                                ),
-                            ],
-                            vertical=False,
-                        ),
-                        anchor_x="left",
-                        anchor_y="bottom",
-                        align_x=5,
-                    ),
-                ],
-            ),
-        )
-
-        # x and y don't seem to actually change where this is created. bug?
-        # TODO: make this not appear at the complete bottom left (top left would be better?)
-        super().__init__(border_width=5, child=group)
-
-    def setup_noclip(self, callback: Callable):
-        # disable player collision
-
-        def toggle(*args):
-            # toggle state on click
-            self.noclip_status = True if not self.noclip_status else False
-            self.noclip_button._style = (
-                self.off_style if not self.noclip_status else self.on_style
-            )
-            self.noclip_button.clear()
-
-            callback(status=self.noclip_status)
-
-        self.noclip_status = False
-        self.noclip_button = arcade.gui.UIFlatButton(
-            text="noclip", style=self.off_style
-        )
-        self.noclip_button.on_click = toggle  # type: ignore
-
-    def setup_hyper(self, callback: Callable):
-        # increase player speed
-
-        def toggle(*args):
-            # toggle state on click
-            self.hyper_status = True if not self.hyper_status else False
-            self.hyper_button._style = (
-                self.off_style if not self.hyper_status else self.on_style
-            )
-            self.hyper_button.clear()
-
-            callback(status=self.hyper_status)
-
-        self.hyper_status = False
-
-        self.hyper_button = arcade.gui.UIFlatButton(text="hyper", style=self.off_style)
-        self.hyper_button.on_click = toggle  # type: ignore
 
 
 class GameView(arcade.View):
@@ -132,8 +23,6 @@ class GameView(arcade.View):
         super().__init__()
 
         arcade.set_background_color(arcade.color.AMAZON)
-
-        self.setup_debug_menu()
 
         self.ui_manager = arcade.gui.UIManager()
         self.ui_manager.enable()
@@ -173,13 +62,7 @@ class GameView(arcade.View):
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.camera_gui = arcade.Camera(self.window.width, self.window.height)
 
-        # Create a small white light
-        x = 100
-        y = 200
-        radius = 150
-        mode = "soft"
-        color = arcade.csscolor.WHITE
-        self.player_light = Light(x, y, radius, color, mode)
+        self.noclip_status = False
 
     def switch_map(self, map_name, start_x, start_y):
         """
@@ -210,9 +93,6 @@ class GameView(arcade.View):
         self.player_sprite_list.append(self.player_sprite)
 
         self.setup_physics()
-
-        if self.my_map.light_layer:
-            self.my_map.light_layer.resize(self.window.width, self.window.height)
 
     def setup_physics(self):
         if self.noclip_status:
@@ -261,36 +141,10 @@ class GameView(arcade.View):
             margin=1,
         )[first_number_pad_sprite_index:last_number_pad_sprite_index]
 
-    def setup_debug_menu(self):
-        self.debug = False
-
-        self.debug_menu = DebugMenu(
-            width=450,
-            height=200,
-            noclip_callback=self.noclip,
-            hyper_callback=self.hyper,
-        )
-
-        self.original_movement_speed = constants.MOVEMENT_SPEED
-        self.noclip_status = False
-
-    def enable_debug_menu(self):
-        self.ui_manager.add(self.debug_menu)
-
-    def disable_debug_menu(self):
-        self.ui_manager.remove(self.debug_menu)
-
     def noclip(self, *args, status: bool):
         self.noclip_status = status
 
         self.setup_physics()
-
-    def hyper(self, *args, status: bool):
-        constants.MOVEMENT_SPEED = (
-            int(self.original_movement_speed * 3.5)
-            if status
-            else self.original_movement_speed
-        )
 
     def draw_inventory(self):
         capacity = 10
@@ -335,43 +189,25 @@ class GameView(arcade.View):
         arcade.start_render()
         cur_map = self.map_list[self.cur_map_name]
 
-        # --- Light related ---
-        # Everything that should be affected by lights gets rendered inside this
-        # 'with' statement. Nothing is rendered to the screen yet, just the light
-        # layer.
-        with cur_map.light_layer:
-            arcade.set_background_color(cur_map.background_color)
+        # Use the scrolling camera for sprites
+        self.camera_sprites.use()
 
-            # Use the scrolling camera for sprites
-            self.camera_sprites.use()
+        # Grab each tile layer from the map
+        map_layers = cur_map.map_layers
 
-            # Grab each tile layer from the map
-            map_layers = cur_map.map_layers
+        # Draw scene
+        cur_map.scene.draw()
 
-            # Draw scene
-            cur_map.scene.draw()
+        # Draw the player
+        self.player_sprite_list.draw()
 
-            for item in map_layers.get("searchable", []):
-                arcade.Sprite(
-                    filename=":misc:shiny-stars.png",
-                    center_x=item.center_x,
-                    center_y=item.center_y,
-                    scale=0.8,
-                ).draw()
-
-            # Draw the player
-            self.player_sprite_list.draw()
-
-        if cur_map.light_layer:
-            # Draw the light layer to the screen.
-            # This fills the entire screen with the lit version
-            # of what we drew into the light layer above.
-            if cur_map.properties and "ambient_color" in cur_map.properties:
-                ambient_color = cur_map.properties["ambient_color"]
-                # ambient_color = (ambient_color.green, ambient_color.blue, ambient_color.alpha, ambient_color.red)
-            else:
-                ambient_color = arcade.color.WHITE
-            cur_map.light_layer.draw(ambient_color=ambient_color)
+        for item in map_layers.get("searchable", []):
+            arcade.Sprite(
+                filename=":misc:shiny-stars.png",
+                center_x=item.center_x,
+                center_y=item.center_y,
+                scale=0.8,
+            ).draw()
 
         # Use the non-scrolled GUI camera
         self.camera_gui.use()
@@ -500,8 +336,6 @@ class GameView(arcade.View):
         # Update player animation
         self.player_sprite_list.on_update(delta_time)
 
-        self.player_light.position = self.player_sprite.position
-
         # Update the characters
         try:
             self.map_list[self.cur_map_name].scene["characters"].on_update(delta_time)
@@ -580,19 +414,6 @@ class GameView(arcade.View):
             self.selected_item = 9
         elif key == arcade.key.KEY_0:
             self.selected_item = 10
-        elif key == arcade.key.L:
-            cur_map = self.map_list[self.cur_map_name]
-            if self.player_light in cur_map.light_layer:
-                cur_map.light_layer.remove(self.player_light)
-            else:
-                cur_map.light_layer.add(self.player_light)
-        elif key == arcade.key.GRAVE:  # `
-            # toggle debug
-            self.debug = True if not self.debug else False
-            if self.debug:
-                self.enable_debug_menu()
-            else:
-                self.disable_debug_menu()
 
     def close_message_box(self):
         self.message_box = None
@@ -601,7 +422,9 @@ class GameView(arcade.View):
         """Search for things"""
         map_layers = self.map_list[self.cur_map_name].map_layers
         if "searchable" not in map_layers:
-            print(f"No searchable sprites on {self.cur_map_name} map layer.")
+            self.message_box = MessageBox(
+                self, "No searchable items nearby"
+            )
             return
 
         searchable_sprites = map_layers["searchable"]
@@ -655,5 +478,3 @@ class GameView(arcade.View):
         self.camera_sprites.resize(width, height)
         self.camera_gui.resize(width, height)
         cur_map = self.map_list[self.cur_map_name]
-        if cur_map.light_layer:
-            cur_map.light_layer.resize(width, height)
