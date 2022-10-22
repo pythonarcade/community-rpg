@@ -36,22 +36,73 @@ The game is in extremely early stages. For discussion on future direction, see:
 - **Select Current Item in Hotbar:** 1-0 *(Number keys)*
 - **Open Menu:** ESC
 
-## Development
+## Installation
 
-This project targets Python 3.7 or greater.
+If you already have a compatible version of Python and poetry installed, you can get started right away.
 
-To install the project and all development dependencies run the following command, this should ideally be done in a [virtual environment](https://docs.python.org/3/tutorial/venv.html):
+The recommended installation is with `asdf` on Linux, Mac, and Windows (through WSL). For Windows native, see the recommended solutions further below
 
-```bash
+### Mac, Linux, and Windows-Subsystem-for-Llinux (WSL)
+
+`asdf` is a general purpose version manager and we use it to ensure consistency between setups. To install `asdf`, follow the [installation guide](https://asdf-vm.com/guide/getting-started.html)
+
+Once you have installed `asdf`, there are a few additional steps
+
+```sh
+asdf plugin-add python https://github.com/asdf-community/asdf-python.git
+asdf plugin-add poetry https://github.com/asdf-community/asdf-poetry.git
+
+# Make sure you are within the project directory and then run:
+cd community-rpg
+asdf install
+
+# Then install the project to check that setup worked
 poetry install
 ```
 
-The game can then be ran with:
+### Windows Native
 
-```bash
-poetry run python -m rpg
+1. There are multiple ways to install Python on Windows if you don't have it already. Our recommend approach is to install Chocolatey and run `choco install python` ([link](https://community.chocolatey.org/packages/python)). See the [guide for installing and configuring chocolatey here](https://chocolatey.org/install).
+1. Next, install `poetry` following the [official poetry installation guide](https://python-poetry.org/docs/#installing-with-the-official-installer). We recommend using `pipx` ([pipx guide](https://pypa.github.io/pipx/installation/)), but installing method with powershell is the fastest way to get started.
+1. To test that installation succeeded, run `poetry install` in the game directory before proceeding.
+
+## Game Play
+
+### Quick Start
+
+Let's launch the game UI and make the first code changes! 
+
+```sh
+> poetry shell
+(shell) doit play
+
+# # FYI: this is the proposed way to interact, you can't currently use doit, so run for now:
+# poetry run python -m rpg
+````
+
+This will open the game window where you can walk around using the keys `W`, `A`, `S`, and `D`
+
+To make the first code change, try editing the file in **TBD/TBD/TBD.py** and changing the **TBD** to **TBD**
+
+Note: you may have seen it above, but we will use the convention of `>` to indicate a normal shell prompt and `(shell)` to indicate when the command must be run after running `poetry shell` at least once. Alternatively, you could use `poetry run doit play`, but using `poetry shell` first is more convenient
+
+```sh
+doit play
 ```
 
-## Contact The Maintainer
+Great, you've made your first code change!
 
-paul@cravenfamily.com
+Now the first task code is very limited and needs your help to refactor and extend it, but first lets take a look at the baseline functionality:
+
+```sh
+# Run all of the default tasks
+(shell) doit --continue
+# Tasks can also be run one-by-one
+(shell) doit inspect
+# Or you can use a watcher utility that will re-run on changes
+(shell) doit watch_changes
+```
+
+**TBD** ... (These docs are WIP and a proposed way to interact, but heve not yet been implemented!)
+
+(TODO: how to switch tasks? Maybe `doit start task2`? Maybe this would pull the necessary sample code and README? Then the full test suite would be run against all pulled tasks?)
