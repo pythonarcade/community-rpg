@@ -1,14 +1,19 @@
-from PIL import Image
 import json
+import os
+import sys
 from pathlib import Path
 
-files = Path("resources/elizawy-lpc/Objects").glob("**/*.png")
-for file in files:
-    print(file.stem)
+from PIL import Image
 
-    tileset_file = file.parent / f"{file.stem}.tsj"
+FILE = Path(sys.argv[1])
 
-    im = Image.open(file)
+
+def main():
+    assert FILE.is_file()
+
+    tileset_FILE = FILE.parent / f"{FILE.stem}.tsj"
+
+    im = Image.open(FILE)
     width, height = im.size
 
     columns = width / 32
@@ -17,11 +22,11 @@ for file in files:
 
     data = {
         "columns": columns,
-        "image": file.name,
+        "image": FILE.name,
         "imageheight": height,
         "imagewidth": width,
         "margin": 0,
-        "name": file.stem,
+        "name": FILE.stem,
         "spacing": 0,
         "tilecount": tilecount,
         "tiledversion": "1.9.2",
@@ -31,6 +36,8 @@ for file in files:
         "version": "1.9"
     }
 
-    with open(tileset_file, "w") as outfile:
+    with open(tileset_FILE, "w") as outfile:
         json.dump(data, outfile)
 
+if __name__ == "__main__":
+    main()
