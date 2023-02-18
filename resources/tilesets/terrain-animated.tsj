@@ -1,0 +1,14 @@
+{ "columns":12,
+ "image":"..\/elizawy-lpc\/Terrain\/animated\/terrain-animated.png",
+ "imageheight":1920,
+ "imagewidth":384,
+ "margin":0,
+ "name":"terrain-animated",
+ "spacing":0,
+ "tilecount":720,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}
