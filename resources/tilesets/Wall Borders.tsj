@@ -1,0 +1,14 @@
+{ "columns":24,
+ "image":"..\/elizawy-lpc\/Structure\/Wall Borders\/Wall Borders.png",
+ "imageheight":1568,
+ "imagewidth":768,
+ "margin":0,
+ "name":"Wall Borders",
+ "spacing":0,
+ "tilecount":1176,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

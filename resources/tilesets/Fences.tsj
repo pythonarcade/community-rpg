@@ -1,0 +1,14 @@
+{ "columns":5,
+ "image":"..\/elizawy-lpc\/Structure\/Fences\/Fences.png",
+ "imageheight":512,
+ "imagewidth":160,
+ "margin":0,
+ "name":"Fences",
+ "spacing":0,
+ "tilecount":80,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

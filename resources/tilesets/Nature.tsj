@@ -1,0 +1,14 @@
+{ "columns":18,
+ "image":"..\/elizawy-lpc\/Objects\/Nature\/Nature.png",
+ "imageheight":3440,
+ "imagewidth":576,
+ "margin":0,
+ "name":"Nature",
+ "spacing":0,
+ "tilecount":1926,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

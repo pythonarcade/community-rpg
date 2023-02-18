@@ -1,0 +1,14 @@
+{ "columns":13,
+ "image":"..\/elizawy-lpc\/Objects\/Small Items\/Small Items.png",
+ "imageheight":2336,
+ "imagewidth":416,
+ "margin":0,
+ "name":"Small Items",
+ "spacing":0,
+ "tilecount":949,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

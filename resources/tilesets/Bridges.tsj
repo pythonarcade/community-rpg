@@ -1,0 +1,14 @@
+{ "columns":10,
+ "image":"..\/elizawy-lpc\/Structure\/Bridges\/Bridges.png",
+ "imageheight":1440,
+ "imagewidth":320,
+ "margin":0,
+ "name":"Bridges",
+ "spacing":0,
+ "tilecount":450,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

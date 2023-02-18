@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"..\/elizawy-lpc\/Structure\/Structures\/Structures.png",
+ "imageheight":576,
+ "imagewidth":256,
+ "margin":0,
+ "name":"Structures",
+ "spacing":0,
+ "tilecount":144,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

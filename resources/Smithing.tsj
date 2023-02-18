@@ -1,0 +1,14 @@
+{ "columns":16,
+ "image":"elizawy-lpc\/Objects\/Furniture\/Smithing\/Smithing.png",
+ "imageheight":640,
+ "imagewidth":512,
+ "margin":0,
+ "name":"Smithing",
+ "spacing":0,
+ "tilecount":320,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

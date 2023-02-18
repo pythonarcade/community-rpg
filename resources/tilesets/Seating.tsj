@@ -1,0 +1,14 @@
+{ "columns":15,
+ "image":"..\/elizawy-lpc\/Objects\/Furniture\/Seating\/Seating.png",
+ "imageheight":6016,
+ "imagewidth":480,
+ "margin":0,
+ "name":"Seating",
+ "spacing":0,
+ "tilecount":2820,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}
