@@ -6,7 +6,7 @@ An open-source RPG
 import arcade
 
 from rpg.constants import SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_WIDTH
-from rpg.views import ViewMainMenu
+from rpg.views import ViewGame
 
 
 class MyWindow(arcade.Window):
@@ -21,7 +21,7 @@ def main():
     """Main method"""
     window = MyWindow()
     window.center_window()
-    start_view = ViewMainMenu()
+    start_view = ViewGame()
     window.show_view(start_view)
     arcade.run()
 
