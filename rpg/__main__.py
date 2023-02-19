@@ -3,11 +3,10 @@ Python Arcade Community RPG
 
 An open-source RPG
 """
-
 import arcade
 
 from rpg.constants import SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_WIDTH
-from rpg.views import LoadingView
+from rpg.views import ViewMainMenu
 
 
 class MyWindow(arcade.Window):
@@ -15,19 +14,14 @@ class MyWindow(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
         self.views = {}
 
-        arcade.resources.add_resource_handle("characters", "resources/characters")
-        arcade.resources.add_resource_handle("maps", "resources/maps")
-        arcade.resources.add_resource_handle("data", "resources/data")
-        arcade.resources.add_resource_handle("sounds", "resources/sounds")
-        arcade.resources.add_resource_handle("misc", "resources/misc")
+        arcade.resources.add_resource_handle("assets", "resources")
 
 
 def main():
     """Main method"""
     window = MyWindow()
     window.center_window()
-    start_view = LoadingView()
-    start_view.setup()
+    start_view = ViewMainMenu()
     window.show_view(start_view)
     arcade.run()
 

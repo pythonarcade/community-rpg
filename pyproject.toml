@@ -1,16 +1,35 @@
-[tool.black]
-line-length = 89
-target_version = ['py38', 'py39', 'py10']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/'''
+[project]
+name = "community-rpg"
+version = "1.0.0"
+description = "An Open Source RPG Game Developed with Python using the Arcade Library."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+maintainers = [
+    {name = "Paul Vincent Craven", email = "paul.craven@simpson.edu"},
+    {name = "Darren Eberly", email="darren.eberly@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Games/Entertainment :: Role-Playing"
+]
+dependencies = [
+    "arcade @ https://github.com/pythonarcade/arcade/zipball/1c8b00863ad70f0adca473aa441e44aa0eee99ab"
+]
 
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+    "black"
+]
+
+[tool.setuptools.packages.find]
+include = ["rpg", "rpg.*"]

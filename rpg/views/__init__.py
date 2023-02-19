@@ -1,1 +1,2 @@
-from .loading_view import LoadingView
+from .game import ViewGame
+from .main_menu import ViewMainMenu
