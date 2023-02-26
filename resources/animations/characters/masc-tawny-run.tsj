@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"..\/..\/elizawy-lpc\/Characters\/Body\/Body 02 - Masculine, Thin\/Tawny\/Run.png",
+ "imageheight":256,
+ "imagewidth":512,
+ "margin":0,
+ "name":"Run",
+ "spacing":32,
+ "tilecount":32,
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.9"
+}

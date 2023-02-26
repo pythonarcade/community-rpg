@@ -824,7 +824,8 @@
         {
          "firstgid":18745,
          "source":"tilesets\/Smithing.tsj"
-        }],
+        }
+],
  "tilewidth":32,
  "type":"map",
  "version":"1.9",
