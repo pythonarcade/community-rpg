@@ -5,7 +5,7 @@ class TestPlayer(arcade.Sprite):
     def __init__(
         self,
         path_or_texture=":resources:images/animated_characters/female_person/femalePerson_idle.png",
-        scale=0.3,
+        scale=0.5,
         center_x=50,
         center_y=50,
     ):
