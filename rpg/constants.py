@@ -1,3 +1,7 @@
+# Window
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Community RPG"
+
+# Player
+MOVEMENT_SPEED = 10
