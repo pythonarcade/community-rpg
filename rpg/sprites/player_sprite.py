@@ -8,6 +8,12 @@ class PlayerSprite(CharacterSprite):
         super().__init__(sheet_name)
         self.sound_update = 0
         self.footstep_sound = arcade.load_sound(":sounds:footstep00.wav")
+        self.hit_box = [
+            (12, 0),
+            (12, -16),
+            (-12, -16),
+            (-12, 0)
+        ]
 
     def on_update(self, delta_time):
         super().on_update(delta_time)
